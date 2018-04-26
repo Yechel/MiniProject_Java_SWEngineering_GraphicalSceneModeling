@@ -35,16 +35,198 @@ public class VectorTest {
 
     @Test
     public void crossProduct() {
+        //sectors: 1 and 1
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,1,1);
+        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
 
+
+        //sectors: 1 and 2
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,-2,2)));
+
+        //sectors: 1 and 3
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,0,-2)));
+
+        //sectors: 1 and 4
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,-2,0)));
+
+        //sectors: 1 and 5
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(-2,2,0)));
+
+        //sectors: 1 and 6
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(-2,0,2)));
+
+        //sectors: 1 and 7
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,2,-2)));
+
+        //sectors: 1 and 8
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue(v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+
+
+        //sectors: 2 and 2
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,1,1);
+        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+
+        //sectors: 2 and 3
+        v = new Vector(-1, 1, 1);
+        u = new Vector(1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,2,0)));
+
+        //sectors: 2 and 4
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,0,2)));
+
+        //sectors: 2 and 5
+        v = new Vector(-1, 1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(-2,0,-2)));
+//TODO: im here...
+        //sectors: 2 and 6
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 2 and 7
+        v = new Vector(-1, 1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 2 and 8
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 3
+        v = new Vector(1, -1, 1);
+        u = new Vector(1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 4
+        v = new Vector(1, -1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 5
+        v = new Vector(1, -1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 6
+        v = new Vector(1, -1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 7
+        v = new Vector(1, -1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 8
+        v = new Vector(1, -1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 4
+        v = new Vector(-1, -1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 5
+        v = new Vector(-1, -1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 6
+        v = new Vector(-1, -1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 7
+        v = new Vector(-1, -1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 8
+        v = new Vector(-1, -1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 5
+        v = new Vector(1, 1, -1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 6
+        v = new Vector(1, 1, -1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 7
+        v = new Vector(1, 1, -1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 8
+        v = new Vector(1, 1, -1);
+        u = new Vector(-1,-1,-1);
+
+        //sectors: 6 and 6
+        v = new Vector(-1, 1, -1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 6 and 7
+        v = new Vector(-1, 1, -1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 6 and 8
+        v = new Vector(-1, 1, -1);
+        u = new Vector(-1,-1,-1);
+
+        //sectors: 7 and 7
+        v = new Vector(1, -1, -1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 7 and 8
+        v = new Vector(1, -1, -1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 8 and 8
+        v = new Vector(-1, -1, -1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+       // crossProduct with (0,0,0)
         v = new Vector(1, 0, 0);
-        u = new Vector(0,1,0);
-        assertEquals("works!", 1, v.length(), 1e-10);
-
-        v = new Vector(0, 1, 0);
-        assertEquals("works!", 1, v.length(), 1e-10);
-
-        v = new Vector(0, 0, 1);
-        assertEquals("works!", 1, v.length(), 1e-10);
+        u = new Vector(0,0,0);
+        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
 
     }
 
@@ -53,6 +235,11 @@ public class VectorTest {
         v = new Vector(3.5, -5, 10);
         v.normalize();
         assertEquals("", 1, v.length(), 1e-10);
+
+        v = new Vector(3.5, -5, 10);
+        v.normalize();
+        assertEquals("", 1, v.length(), 1e-10);
+
 
         v = new Vector(0, 0, 0);
         try {
@@ -103,5 +290,199 @@ public class VectorTest {
 
     @Test
     public void dotProduct() {
+        //sectors: 1 and 1
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,1,1);
+        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+
+
+        //sectors: 1 and 2
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,-2,2)));
+
+        //sectors: 1 and 3
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,0,-2)));
+
+        //sectors: 1 and 4
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,-2,0)));
+
+        //sectors: 1 and 5
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(-2,2,0)));
+
+        //sectors: 1 and 6
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(-2,0,2)));
+
+        //sectors: 1 and 7
+        v = new Vector(1, 1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,2,-2)));
+
+        //sectors: 1 and 8
+        v = new Vector(1, 1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue(v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+
+
+        //sectors: 2 and 2
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,1,1);
+        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+
+        //sectors: 2 and 3
+        v = new Vector(-1, 1, 1);
+        u = new Vector(1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,2,0)));
+
+        //sectors: 2 and 4
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(2,0,2)));
+
+        //sectors: 2 and 5
+        v = new Vector(-1, 1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(-2,0,-2)));
+
+        //sectors: 2 and 6
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 2 and 7
+        v = new Vector(-1, 1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 2 and 8
+        v = new Vector(-1, 1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 3
+        v = new Vector(1, -1, 1);
+        u = new Vector(1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 4
+        v = new Vector(1, -1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 5
+        v = new Vector(1, -1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 6
+        v = new Vector(1, -1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 7
+        v = new Vector(1, -1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 3 and 8
+        v = new Vector(1, -1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 4
+        v = new Vector(-1, -1, 1);
+        u = new Vector(-1,-1,1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 5
+        v = new Vector(-1, -1, 1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 6
+        v = new Vector(-1, -1, 1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 7
+        v = new Vector(-1, -1, 1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 4 and 8
+        v = new Vector(-1, -1, 1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 5
+        v = new Vector(1, 1, -1);
+        u = new Vector(1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 6
+        v = new Vector(1, 1, -1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 7
+        v = new Vector(1, 1, -1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 5 and 8
+        v = new Vector(1, 1, -1);
+        u = new Vector(-1,-1,-1);
+
+        //sectors: 6 and 6
+        v = new Vector(-1, 1, -1);
+        u = new Vector(-1,1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 6 and 7
+        v = new Vector(-1, 1, -1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 6 and 8
+        v = new Vector(-1, 1, -1);
+        u = new Vector(-1,-1,-1);
+
+        //sectors: 7 and 7
+        v = new Vector(1, -1, -1);
+        u = new Vector(1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 7 and 8
+        v = new Vector(1, -1, -1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        //sectors: 8 and 8
+        v = new Vector(-1, -1, -1);
+        u = new Vector(-1,-1,-1);
+        assertTrue( v.crossProduct(u).equals(new Vector(0,0,1)));
+
+        // crossProduct with (0,0,0)
+        v = new Vector(1, 0, 0);
+        u = new Vector(0,0,0);
+        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
+                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+
+
     }
 }
