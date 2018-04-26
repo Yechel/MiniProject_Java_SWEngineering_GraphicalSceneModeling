@@ -1,0 +1,97 @@
+package Geometrics;
+
+import Primitives.Point3D;
+import Primitives.Vector;
+
+import java.lang.reflect.Array;
+import java.util.*;
+
+import static java.lang.String.format;
+
+public class Triangle {
+    private Point3D _p1;
+    private Point3D _p2;
+    private Point3D _p3;
+
+    /*constractors*/
+    public Triangle(Point3D p1, Point3D p2, Point3D p3)  throws Exception{
+        Vector V = new Vector(get_p1(),get_p2());
+        Vector U = new Vector(get_p1(),get_p3());
+        Vector zero = new Vector(new Point3D(0,0,0));
+        if (V.crossProduct(U).equals(zero)){
+            throw new Exception("Triangle Exeption: the points are in the same line");
+        }
+        set_p1(p1);
+        set_p2(p2);
+        set_p3(p3);
+    }
+
+    public Triangle() {
+        set_p1(new Point3D(1,1,1));
+        set_p2(new Point3D(1,0,1));
+        set_p3(new Point3D(0,1,0));
+    }
+
+    /*getters*/
+
+    public Point3D get_p1() {
+        return _p1;
+    }
+
+    public Point3D get_p2() {
+        return _p2;
+    }
+
+    public Point3D get_p3() {
+        return _p3;
+    }
+
+    /*setters*/
+    public void set_p1(Point3D _p1) {
+        this._p1 = _p1;
+    }
+
+    public void set_p2(Point3D _p2) {
+        this._p2 = _p2;
+    }
+
+    public void set_p3(Point3D _p3) {
+        this._p3 = _p3;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) throws IllegalArgumentException {
+        if (obj instanceof Triangle) {
+            Vector V1 = new Vector(get_p1(),get_p2());
+            Vector V2 = new Vector(get_p1(),get_p3());
+            Vector V3 = new Vector(get_p3(),get_p2());
+            Vector U1 = new Vector(((Triangle) obj).get_p1(),((Triangle) obj).get_p2());
+            Vector U2 = new Vector(((Triangle) obj).get_p1(),((Triangle) obj).get_p2());
+            Vector U3 = new Vector(((Triangle) obj).get_p1(),((Triangle) obj).get_p2());
+            double[] Len = new double[6];
+            Len[0] = V1.length();
+            Len[1] = V2.length();
+            Len[2] = V3.length();
+            Len[3] = U1.length();
+            Len[4] = U2.length();
+            Len[5] = U3.length();
+            Arrays.sort(Len);
+            for (int i =0; i < 6; i = i+2)
+            {
+                if (Len[i] != Len[i+1]){
+                    return false;}
+            }
+            return true;
+        }
+        throw new IllegalArgumentException("the parameter isn't Triangle.");
+    }
+
+    @Override
+    public String toString() {
+        return format("Triangle that expands from P1:%s, P2:%s, P3:%s",
+                get_p1().toString(),
+                get_p2().toString(),
+                get_p3().toString());
+    }
+}//end of Triangle

@@ -1,0 +1,131 @@
+package Primitives;
+
+import java.math.MathContext;
+
+public class Vector {
+    private Point3D _head;
+    private Point3D _tail; //needed to vector that start from (0,0,0).
+
+    public Vector(Vector vector) {
+        set_head(new Point3D(0, 0, 0));
+        set_tail(new Point3D(0, 0, 0));
+    }
+
+    public Vector(Point3D head) {
+        set_head(head);
+        set_tail(new Point3D(0, 0, 0));
+    }
+
+    public Vector(Point3D head, Point3D tail) {
+        set_head(head);
+        set_tail(tail);
+    }
+
+    public Vector(double x, double y, double z) {
+        set_head(new Point3D(x, y, z));
+        set_tail(new Point3D(0, 0, 0));
+    }
+
+
+    public Point3D get_head() {
+        return _head;
+    }
+
+    public Point3D get_tail() {
+        return _tail;
+    }
+
+
+    public void set_head(Point3D _head) {
+        this._head = new Point3D(_head);
+    }
+
+    public void set_tail(Point3D _tail) {
+        this._tail = _tail;
+    }
+
+
+
+    //methods
+
+    public double length() {
+        Point3D s =  get_head();
+        return Math.sqrt(
+                Math.pow(s.get_x().get_coordinate(), 2) +
+                        Math.pow(s.get_y().get_coordinate(), 2) +
+                        Math.pow(s.get_z().get_coordinate(), 2));
+    }
+
+
+
+
+    public Vector crossProduct(Vector v) {
+        Point3D u = new Point3D();
+        u.set_x((get_head().get_y().mult(v.get_head().get_z())).get_coordinate());
+        u.set_y((get_head().get_z().mult(v.get_head().get_x())).get_coordinate());
+        u.set_z((get_head().get_x().mult(v.get_head().get_y())).get_coordinate());
+        Point3D w = new Point3D();
+        w.set_x((get_head().get_z().mult(v.get_head().get_y())).get_coordinate());
+        w.set_y((get_head().get_x().mult(v.get_head().get_z())).get_coordinate());
+        w.set_z((get_head().get_y().mult(v.get_head().get_x())).get_coordinate());
+        return new Vector(u.subtract(new Vector(w)));
+    }
+
+    public Vector normalize() throws ArithmeticException {
+        if (length() == 0) {
+            throw new ArithmeticException("cannot divide by zero");
+        }
+        return this.scale(1 / this.length());
+    }
+
+    // TODO: see where to put this
+    public Vector getNormal(Point3D point) {
+        Vector U = new Vector(point);
+        Vector N = new Vector(this.crossProduct(U));
+        N.normalize();
+        N.scale(-1);
+        return N;
+    }
+
+    public Vector scale(double d) {
+        get_head().scale(d);
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) throws IllegalArgumentException{
+        //vectors are equal if the have the same length
+        //and the same direction therefor:
+        if (obj instanceof Vector) {
+            if ((this.length()) == ((Vector) obj).length()) {
+                return ((Vector) obj).normalize().get_head().equals(this.normalize().get_head());
+            }
+        }
+        throw new IllegalArgumentException("the object is not a Vector type");
+    }
+
+    public Vector add (Vector v) {
+        set_head(get_head().add(v));
+        return  this;
+    }
+
+    public Vector subtract (Vector v) {
+        set_head(get_head().subtract(v));
+
+        return  this;
+    }
+
+ public double dotProduct (Vector v){
+     return (get_head().get_x().mult(v.get_head().get_x())).get_coordinate() +
+    (get_head().get_y().mult(v.get_head().get_y())).get_coordinate()+
+    (get_head().get_z().mult(v.get_head().get_z())).get_coordinate();
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format("(0,0,0)->%s", super.toString());
+    }
+
+
+}//end of Vector
