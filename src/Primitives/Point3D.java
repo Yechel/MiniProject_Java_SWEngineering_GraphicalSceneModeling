@@ -45,14 +45,13 @@ public class Point3D extends Point2D {
     }
 
     @Override
-    public boolean equals(Object obj)  throws ExceptionInInitializerError{
+    public boolean equals(Object obj)  throws IllegalArgumentException{
         if (obj instanceof Point3D) {
             if ( super.equals(obj))
                 if (get_z().equals(((Point3D) obj).get_z()))
                     return true;
         }
-
-        throw new ExceptionInInitializerError("the object is not Point3D type");
+        throw new IllegalArgumentException("the object is not Point3D type");
     }
 
 

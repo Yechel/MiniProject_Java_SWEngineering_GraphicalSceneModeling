@@ -76,6 +76,7 @@ public class Vector {
             throw new ArithmeticException("cannot divide by zero");
         }
         return this.scale(1 / this.length());
+        //TODO: why its needed to scale with -1?
     }
 
     // TODO: see where to put this
@@ -97,11 +98,20 @@ public class Vector {
         //vectors are equal if the have the same length
         //and the same direction therefor:
         if (obj instanceof Vector) {
+            if (((Vector) obj).isZero())
+                return(this.isZero());
             if ((this.length()) == ((Vector) obj).length()) {
                 return ((Vector) obj).normalize().get_head().equals(this.normalize().get_head());
             }
+            return false;
         }
         throw new IllegalArgumentException("the object is not a Vector type");
+    }
+
+    private boolean isZero() {
+        return (get_head().get_x().get_coordinate() == 0 &&
+                get_head().get_y().get_coordinate() == 0 &&
+                get_head().get_z().get_coordinate() == 0 );
     }
 
     public Vector add (Vector v) {
