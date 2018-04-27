@@ -7,8 +7,8 @@ public class Vector {
     private Point3D _tail; //needed to vector that start from (0,0,0).
 
     public Vector(Vector vector) {
-        set_head(new Point3D(0, 0, 0));
-        set_tail(new Point3D(0, 0, 0));
+        set_head(vector.get_head());
+        set_tail(vector.get_tail());
     }
 
     public Vector(Point3D head) {
@@ -45,18 +45,15 @@ public class Vector {
     }
 
 
-
     //methods
 
     public double length() {
-        Point3D s =  get_head();
+        Point3D s = get_head();
         return Math.sqrt(
                 Math.pow(s.get_x().get_coordinate(), 2) +
                         Math.pow(s.get_y().get_coordinate(), 2) +
                         Math.pow(s.get_z().get_coordinate(), 2));
     }
-
-
 
 
     public Vector crossProduct(Vector v) {
@@ -94,16 +91,15 @@ public class Vector {
     }
 
     @Override
-    public boolean equals(Object obj) throws IllegalArgumentException{
+    public boolean equals(Object obj) throws IllegalArgumentException {
         //vectors are equal if the have the same length
         //and the same direction therefor:
         if (obj instanceof Vector) {
-            if (((Vector) obj).isZero())
-                return(this.isZero());
-            if ((this.length()) == ((Vector) obj).length()) {
-                return ((Vector) obj).normalize().get_head().equals(this.normalize().get_head());
+            if (((Vector) obj).isZero()) {
+                return (this.isZero());
             }
-            return false;
+            return ((this.length()) == ((Vector) obj).length() &&
+                    ((Vector) obj).normalize().get_head().equals(this.normalize().get_head()));
         }
         throw new IllegalArgumentException("the object is not a Vector type");
     }
@@ -111,24 +107,24 @@ public class Vector {
     private boolean isZero() {
         return (get_head().get_x().get_coordinate() == 0 &&
                 get_head().get_y().get_coordinate() == 0 &&
-                get_head().get_z().get_coordinate() == 0 );
+                get_head().get_z().get_coordinate() == 0);
     }
 
-    public Vector add (Vector v) {
+    public Vector add(Vector v) {
         set_head(get_head().add(v));
-        return  this;
+        return this;
     }
 
-    public Vector subtract (Vector v) {
+    public Vector subtract(Vector v) {
         set_head(get_head().subtract(v));
 
-        return  this;
+        return this;
     }
 
- public double dotProduct (Vector v){
-     return (get_head().get_x().mult(v.get_head().get_x())).get_coordinate() +
-    (get_head().get_y().mult(v.get_head().get_y())).get_coordinate()+
-    (get_head().get_z().mult(v.get_head().get_z())).get_coordinate();
+    public double dotProduct(Vector v) {
+        return (get_head().get_x().mult(v.get_head().get_x())).get_coordinate() +
+                (get_head().get_y().mult(v.get_head().get_y())).get_coordinate() +
+                (get_head().get_z().mult(v.get_head().get_z())).get_coordinate();
     }
 
 

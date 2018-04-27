@@ -26,9 +26,9 @@ public class Ray {
         set_POO(new Point3D());
     }
 
-    public Ray(Vector dirction, Point3D POO)
+    public Ray(Vector direction, Point3D POO)
     {
-        set_direction(dirction);
+        set_direction(direction);
         set_POO(POO);
     }
 }

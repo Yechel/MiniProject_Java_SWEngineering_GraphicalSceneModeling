@@ -32,8 +32,8 @@ public class Camera {
 
     public Camera() {
         set_P0(new Point3D(0, 0, 0));
-        set_vUp(new Vector(new Point3D(0, 1, 0)));
-        set_vTo(new Vector(new Point3D(0, 0, 1)));
+        set_vUp(new Vector(new Point3D(0, -1, 0)));
+        set_vTo(new Vector(new Point3D(0, 0, -1)));
         set_vRight(new Vector(new Point3D(1, 0, 0)));
     }
 
@@ -81,10 +81,10 @@ public class Camera {
         Pc.scale(screenDistance);
         double Rx = screenWidth / Nx;
         double Ry = screenHeight / Ny;
-        double Xd = (x - (screenWidth / 2)) * Rx + (Rx / 2);
-        double Yd = (y - (screenHeight / 2)) * Ry + (Ry / 2);
-        Vector P = new Vector(Pc.add(get_vRight().scale(Xd).subtract(get_vUp().scale(Yd))));
+        double Xd = (x - ((Nx+1) / 2)) * Rx;
+        double Yd = (y - ((Ny+1) / 2)) * Ry ;
+        Vector P = new Vector(Pc.add((get_vRight().scale(Xd)).subtract(get_vUp().scale(Yd))));
         P.normalize();
-        return new Ray(P,new Point3D(0,0,0));
+        return new Ray(P,get_vTo().get_tail());
     }
 }
