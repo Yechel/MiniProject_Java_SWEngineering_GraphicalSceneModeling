@@ -297,27 +297,25 @@ public class VectorTest {
     @Test
     public void dotProduct() {
         //sectors: 1 and 1
-        v = new Vector(1, 1, 1);
+        v = new Vector(1, 0.5, 1);
         u = new Vector(1,1,1);
-        assertTrue( v.crossProduct(u).get_head().get_x().get_coordinate() == 0 &&
-                v.crossProduct(u).get_head().get_y().get_coordinate() == 0 &&
-                v.crossProduct(u).get_head().get_z().get_coordinate() == 0);
+         assertEquals("works!", 3, v.dotProduct(u), 1e-10);
 
 
         //sectors: 1 and 2
-        v = new Vector(1, 1, 1);
-        u = new Vector(-1,1,1);
-        assertTrue( v.crossProduct(u).equals(new Vector(0,-2,2)));
+        v = new Vector(7, 5, 3);
+        u = new Vector(-5,1,3);
+           assertEquals("works!", 39, v.dotProduct(u), 1e-10);
 
         //sectors: 1 and 3
-        v = new Vector(1, 1, 1);
-        u = new Vector(1,-1,1);
-        assertTrue( v.crossProduct(u).equals(new Vector(2,0,-2)));
+        v = new Vector(3, 2, 2);
+        u = new Vector(4,-2,8);
+          assertEquals("works!", 24, v.dotProduct(u), 1e-10);
 
         //sectors: 1 and 4
         v = new Vector(1, 1, 1);
         u = new Vector(-1,-1,1);
-        assertTrue( v.crossProduct(u).equals(new Vector(2,-2,0)));
+         assertEquals("works!", 24, v.dotProduct(u), 1e-10);
 
         //sectors: 1 and 5
         v = new Vector(1, 1, 1);
