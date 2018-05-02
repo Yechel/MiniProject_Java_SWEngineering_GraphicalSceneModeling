@@ -6,6 +6,11 @@ public class Vector {
     private Point3D _head;
     private Point3D _tail; //needed to vector that start from (0,0,0).
 
+    public Vector() {
+        set_head(new Point3D(1,0,0));
+        set_tail(new Point3D(0,0,0));
+    }
+
     public Vector(Vector vector) {
         set_head(vector.get_head());
         set_tail(vector.get_tail());

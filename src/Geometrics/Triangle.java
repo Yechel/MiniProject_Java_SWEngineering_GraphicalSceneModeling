@@ -8,7 +8,7 @@ import java.util.*;
 
 import static java.lang.String.format;
 
-public class Triangle {
+public class Triangle implements Geometry {
     private Point3D _p1;
     private Point3D _p2;
     private Point3D _p3;
@@ -94,4 +94,7 @@ public class Triangle {
                 get_p2().toString(),
                 get_p3().toString());
     }
+
+    @Override
+
 }//end of Triangle

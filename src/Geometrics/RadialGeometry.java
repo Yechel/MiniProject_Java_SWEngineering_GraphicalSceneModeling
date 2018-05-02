@@ -1,6 +1,6 @@
 package Geometrics;
 
-public abstract class RadialGeometry {
+public abstract class RadialGeometry implements Geometry{
 
     protected double _radius;
 
