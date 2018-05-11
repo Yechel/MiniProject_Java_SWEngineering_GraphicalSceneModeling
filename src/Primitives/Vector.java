@@ -16,16 +16,30 @@ public class Vector {
         set_tail(vector.get_tail());
     }
 
+    /**
+     * sets (0,0,0) as a default tail.
+     * @param head
+     */
     public Vector(Point3D head) {
         set_head(head);
         set_tail(new Point3D(0, 0, 0));
     }
 
+    /**
+     * @param head the head of the vector
+     * @param tail the tail of the vector
+     */
     public Vector(Point3D head, Point3D tail) {
-        set_head(head);
-        set_tail(tail);
+        set_head(head.subtract(new Vector(tail)));
+        set_tail(new Point3D(0,0,0));
     }
 
+    /**
+     * sets the point(x,y,z) as a head of the vector
+     * @param x
+     * @param y
+     * @param z
+     */
     public Vector(double x, double y, double z) {
         set_head(new Point3D(x, y, z));
         set_tail(new Point3D(0, 0, 0));
@@ -127,7 +141,7 @@ public class Vector {
     }
 
     public double dotProduct(Vector v) {
-        return (get_head().get_x().mult(v.get_head().get_x())).get_coordinate() +
+             return (get_head().get_x().mult(v.get_head().get_x())).get_coordinate() +
                 (get_head().get_y().mult(v.get_head().get_y())).get_coordinate() +
                 (get_head().get_z().mult(v.get_head().get_z())).get_coordinate();
     }
@@ -135,7 +149,7 @@ public class Vector {
 
     @Override
     public String toString() {
-        return String.format("(0,0,0)->%s", super.toString());
+        return String.format("Vec%s",get_head().toString());
     }
 
 

@@ -6,7 +6,7 @@ public class Ray {
 
 
     public Point3D get_POO() {
-        return _POO;
+        return new Point3D(_POO);
     }
 
     public void set_POO(Point3D _POO) {
@@ -14,11 +14,11 @@ public class Ray {
     }
 
     public Vector get_direction() {
-        return _direction;
+        return new Vector(_direction);
     }
 
     public void set_direction(Vector _direction) {
-        this._direction = _direction;
+        this._direction = _direction.normalize();
     }
     public Ray()
     {
@@ -30,5 +30,10 @@ public class Ray {
     {
         set_direction(direction);
         set_POO(POO);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Ray: p%s %s", get_POO().toString(), get_direction().toString());
     }
 }

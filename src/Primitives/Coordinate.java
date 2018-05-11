@@ -33,7 +33,7 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return String.format("%s", get_coordinate());
+        return String.format("%.2f", get_coordinate());
     }
 
     public Coordinate mult(double d) {

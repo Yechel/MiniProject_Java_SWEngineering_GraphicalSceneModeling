@@ -5,6 +5,7 @@ import Primitives.Point3D;
 import Primitives.Ray;
 import Primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -20,6 +21,22 @@ public class Plane implements Geometry {
         set_p0(new Point3D(1, 0, 1));
     }
 
+    public Plane(Point3D p, Vector v) {
+        set_N(v);
+        set_p0(p);
+    }
+
+    public Plane(Point3D p1, Point3D p2, Point3D p3) throws IllegalArgumentException {
+        Vector V = new Vector(p2, p1);
+        Vector U = new Vector(p3, p1);
+        //if the vectors are parallel and cross the same point then they on the same line.
+        if (Math.abs(V.dotProduct(U)) == 1) {
+            throw new IllegalArgumentException("Plane Exeption: the points are in the same line");
+        }
+        set_N(V.crossProduct(U));
+        set_p0(p1);
+    }
+
     public Plane(Plane p) {
         set_N(p.get_N());
         set_p0(p.get_p0());
@@ -27,32 +44,40 @@ public class Plane implements Geometry {
 
     /*getters*/
     public Vector get_N() {
-        return _N;
+        return new Vector(_N);
     }
 
     public Point3D get_p0() {
-        return _p0;
+        return new Point3D(_p0);
     }
 
     /*setters*/
     public void set_N(Vector n) {
-        _N = n;
+        _N = n.normalize();
     }
 
     public void set_p0(Point3D _p0) {
         this._p0 = _p0;
     }
 
+    /**
+     * two Planes are equal if the vector V (a vector that connect point in one plane and point from the other plane)
+     * dot product with the normal is 0.
+     *
+     * @param obj
+     * @return
+     * @throws IllegalArgumentException
+     */
     //TODO reimplement
     @Override
     public boolean equals(Object obj) throws IllegalArgumentException {
         if (obj instanceof Plane) { //Palanes are equal if they parallel and the they had the sme normalize vector
-            if (this.getNormal().equals(((Plane) obj).getNormal())) {
-                if (getDistance((Plane) obj) == 0) {
-                    return true;
-                }
+            if (get_p0().equals(((Plane) obj).get_p0())) {
+                return (get_N().equals(((Plane) obj).get_N().scale(-1)) ||
+                        get_N().equals(((Plane) obj).get_N()));
             }
-            return false;
+            Vector V = new Vector(((Plane) obj).get_p0(), get_p0());
+            return (V.dotProduct(get_N()) == 0);
         }
         throw new IllegalArgumentException("the Parameter isnt Plane");
     }
@@ -64,26 +89,32 @@ public class Plane implements Geometry {
                 get_N().toString());
     }
 
-
-//TODO:reimplement
-    protected double getDistance(Plane p) {
-        Vector N1 = getNormal();
-        Vector N2 = p.getNormal();
-        if (!N1.equals(N2)) { //not parallel
-            return 0;
-        }
-        Coordinate a2x1 = N2.get_head().get_x().mult(get_p1().get_x());
-        Coordinate b2y1 = N2.get_head().get_y().mult(get_p1().get_y());
-        Coordinate c2z1 = N2.get_head().get_z().mult(get_p1().get_z());
-        Coordinate d = new Coordinate(N1.dotProduct(new Vector(get_p1())) * -1);
-        return Math.abs((a2x1.add(b2y1).add(c2z1).add(d)).get_coordinate()) / N2.length();
-    }
-
-
+    /**
+     * @param ray - aray that needs to check if it intersect with the Plane.
+     * @return list of one point if there is intersection or no points in there isn't.
+     */
     @Override
-    public List <Point3D> findIntersections(Ray ray) {
-        return null;
+    public List <Point3D> findIntersections(Ray ray) throws IllegalArgumentException {
+        ArrayList <Point3D> intersections = new ArrayList <>();
+        if (ray.get_direction().dotProduct(get_N()) == 0) { // the ray and the plane are parallel
+            return intersections;
+        }
+        if (ray.get_POO().equals(get_p0())) {
+            throw new IllegalArgumentException("the given point is the start of the ray");
+        }
+        Vector u = new Vector(ray.get_POO(), get_p0());
+        double t = get_N().scale(-1).dotProduct(u);
+        t = t / (get_N().dotProduct(ray.get_direction()));
+        //TODO the ray is intersect with the plane if only t is neg or only t i pos, need to test and see wether of them is true.
+        if (t> 0)
+        {
+            Point3D p = ray.get_POO().add(ray.get_direction().scale(t));
+            intersections.add(p);
+        }
+        return intersections;
     }
+
+
 
 }
 //

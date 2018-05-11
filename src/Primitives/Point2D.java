@@ -44,9 +44,13 @@ public class Point2D {
     @Override
     public boolean equals(Object obj)  throws ExceptionInInitializerError{
         if (obj instanceof Point2D) {
-            if (get_x().equals(((Point2D) obj).get_x()))
-                if (get_y().equals(((Point2D) obj).get_y()))
-                    return true;
+            if (get_x().equals(((Point2D) obj).get_x())) {
+                {
+                    if (get_y().equals(((Point2D) obj).get_y()))
+                        return true;
+                }
+            }
+            return false;
         }
 
         throw new ExceptionInInitializerError("the object is not Point2D type");
