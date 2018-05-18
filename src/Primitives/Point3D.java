@@ -86,6 +86,11 @@ public class Point3D extends Point2D {
         return this;
     }
 
+    public double distane(Point3D point) {
+        Vector v = new Vector (this, point);
+        return v.length();
+    }
+
 
     /*public boolean inSameLine(Point3D p1,Point3D p2)
     {
