@@ -52,12 +52,12 @@ public class Sphere extends RadialGeometry {
         if (d > get_radius()) {
             return point3DList;
         }
-        double th = Math.sqrt(Math.pow(tm, 2) - Math.pow(d, 2));
+        double th = Math.sqrt(Math.pow(get_radius(), 2) - Math.pow(d, 2));
         double[] t = new double[2];
         t[0] = tm - th;
         t[1] = tm + th;
         for (double i:t) {
-            if (i > 0) {
+            if (i >= 0) {
                 point3DList.add(ray.get_POO().add(ray.get_direction().scale(i)));
             }
         }

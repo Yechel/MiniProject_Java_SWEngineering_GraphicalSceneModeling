@@ -16,8 +16,8 @@ public class Triangle implements Geometry {
 
     /*constractors*/
     public Triangle(Point3D p1, Point3D p2, Point3D p3) throws Exception {
-        Vector V = new Vector(get_p1(), get_p2());
-        Vector U = new Vector(get_p1(), get_p3());
+        Vector V = new Vector(p1, p2);
+        Vector U = new Vector(p1, p3);
         Vector zero = new Vector(new Point3D(0, 0, 0));
         if (V.crossProduct(U).equals(zero)) {
             throw new Exception("Triangle Exeption: the points are in the same line");

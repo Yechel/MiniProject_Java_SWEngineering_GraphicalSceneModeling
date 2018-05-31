@@ -18,7 +18,7 @@ public class Plane implements Geometry {
     /*constructors*/
     public Plane() {
         set_N(new Vector());
-        set_p0(new Point3D(1, 0, 1));
+        set_p0(new Point3D(0, 0, 0));
     }
 
     public Plane(Point3D p, Vector v) {
@@ -100,12 +100,13 @@ public class Plane implements Geometry {
             return intersections;
         }
         if (ray.get_POO().equals(get_p0())) {
-            throw new IllegalArgumentException("the given point is the start of the ray");
+           intersections.add(new Point3D(0,0,0));
+            return intersections;
         }
         Vector u = new Vector(ray.get_POO(), get_p0());
         double t = get_N().scale(-1).dotProduct(u);
         t = t / (get_N().dotProduct(ray.get_direction()));
-        //TODO the ray is intersect with the plane if only t is neg or only t i pos, need to test and see wether of them is true.
+
         if (t> 0)
         {
             Point3D p = ray.get_POO().add(ray.get_direction().scale(t));

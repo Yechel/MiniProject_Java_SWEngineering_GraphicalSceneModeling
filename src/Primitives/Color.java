@@ -18,9 +18,8 @@ public class Color {
     }
 
 
-
     public java.awt.Color get_color() {
-        return _color;
+        return new java.awt.Color(_color.getRGB());
     }
 
     public void set_color(java.awt.Color _color) {
@@ -74,20 +73,25 @@ public class Color {
 
 
     private int scale(int color, double v) {
-        if (Math.abs(v) < 1) {
-            return (int) (color * (1 + v));
-        }//no change
-        if (v <= -1) {
+        int _newColor = (int) (color * (1 + v));
+        if (_newColor > 255) {
+            return 255;
+        } else if (_newColor < 0) {
             return 0;
+        } else {
+            return color;
         }
-       // if (v >= 1)
-        return (int) (color * 2);
+
     }
 
 
     public Color reduce(double i) {
-        if (i < 0) { return scale(100);}
-        if (i>100) {return  scale(0);}
+        if (i < 0) {
+            return scale(100);
+        }
+        if (i > 100) {
+            return scale(0);
+        }
         return scale(-i);
     }
 }

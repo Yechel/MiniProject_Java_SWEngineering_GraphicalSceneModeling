@@ -1,7 +1,5 @@
 package Primitives;
 
-import java.math.MathContext;
-
 public class Vector {
     private Point3D _head;
     private Point3D _tail; //needed to vector that start from (0,0,0).
@@ -67,11 +65,9 @@ public class Vector {
     //methods
 
     public double length() {
+        Point3D zero = new Point3D(0,0,0);
         Point3D s = get_head();
-        return Math.sqrt(
-                Math.pow(s.get_x().get_coordinate(), 2) +
-                        Math.pow(s.get_y().get_coordinate(), 2) +
-                        Math.pow(s.get_z().get_coordinate(), 2));
+        return  zero.distance(s);
     }
 
 

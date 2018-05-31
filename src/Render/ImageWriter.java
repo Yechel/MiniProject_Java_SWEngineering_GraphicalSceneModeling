@@ -97,7 +97,7 @@ public class ImageWriter {
         this._imageWidth = _imageWidth;
     }
 
-    public void set_imageHeight(int _imageHight) {
+    public void set_imageHeight(int _imageHeight) {
         this._imageHeight = _imageHeight;
     }
 

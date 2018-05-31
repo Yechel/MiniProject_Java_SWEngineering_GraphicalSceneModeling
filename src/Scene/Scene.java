@@ -26,6 +26,19 @@ public class Scene {
         set_screenDistance(screenDistance);
     }
 
+    public Scene(){
+
+        set_sceneName("default Scene");
+        set_background(new Color(0,0,0));
+        set_ambientLight(new AmbientLight(new Color(255,255,255), 1));
+        set_geometries(new ArrayList <>()  );
+        set_camera(new Camera());
+        set_screenDistance(50);
+    }
+
+
+
+
     public String get_sceneName() {
         return _sceneName;
     }
@@ -34,8 +47,8 @@ public class Scene {
         this._sceneName = _sceneName;
     }
 
-    public Color get_background() {
-        return _background;
+    public java.awt.Color get_background() {
+        return _background.get_color();
     }
 
     public void set_background(Color _background) {

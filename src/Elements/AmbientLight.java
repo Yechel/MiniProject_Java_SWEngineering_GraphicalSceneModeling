@@ -30,4 +30,5 @@ public class AmbientLight {
     public Color getIntensity(){
         return new Color(get_color().scale(get_Ka()));
     }
+
 }

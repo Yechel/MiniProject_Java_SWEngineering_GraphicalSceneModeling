@@ -86,9 +86,11 @@ public class Point3D extends Point2D {
         return this;
     }
 
-    public double distane(Point3D point) {
-        Vector v = new Vector (this, point);
-        return v.length();
+    public double distance(Point3D point) {
+        return Math.sqrt(
+                Math.pow(point.get_x().get_coordinate() - get_x().get_coordinate(), 2) +
+                        Math.pow(point.get_y().get_coordinate() - get_y().get_coordinate() , 2) +
+                        Math.pow(point.get_z().get_coordinate() - get_z().get_coordinate(), 2));
     }
 
 

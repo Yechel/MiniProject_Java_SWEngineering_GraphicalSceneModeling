@@ -24,7 +24,7 @@ public class Camera {
         set_P0(p0);
         set_vUp(vUp);
         set_vTo(vTo);
-        set_vRight(vTo.crossProduct(vUp));
+        set_vRight();
         _vUp.normalize();
         _vTo.normalize();
         _vRight.normalize();
@@ -34,7 +34,7 @@ public class Camera {
         set_P0(new Point3D(0, 0, 0));
         set_vUp(new Vector(new Point3D(0, -1, 0)));
         set_vTo(new Vector(new Point3D(0, 0, -1)));
-        set_vRight(new Vector(new Point3D(1, 0, 0)));
+        set_vRight();
     }
 
 
@@ -47,7 +47,7 @@ public class Camera {
     }
 
     public Vector get_vUp() {
-        return _vUp;
+        return new Vector(_vUp);
     }
 
     public void set_vUp(Vector _vUp) {
@@ -55,15 +55,19 @@ public class Camera {
     }
 
     public Vector get_vRight() {
-        return _vRight;
+        return new Vector(_vRight);
     }
 
     public void set_vRight(Vector _vRight) {
         this._vRight = _vRight;
     }
 
+    public void set_vRight() {
+        this._vRight = get_vTo().crossProduct(get_vUp());
+    }
+
     public Vector get_vTo() {
-        return _vTo;
+        return new Vector(_vTo);
     }
 
     public void set_vTo(Vector _vTo) {

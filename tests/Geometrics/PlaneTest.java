@@ -6,6 +6,7 @@ import Primitives.Vector;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -31,54 +32,74 @@ public class PlaneTest {
    - crossing Ray
    - some intersect Ray
    - non intersect Ray
-   - ray that comes out from the plane
-   - the point of the ray is the point of the plane
+   - the ray comes out from the plane
    */
-    @Test (expected = IllegalArgumentException.class)
-    public void findIntersections() {
-        ArrayList<Point3D> list;
+    @Test
+    public void findIntersections1() {
+        ArrayList <Ray> ray_list = new ArrayList <>();
+        ray_list.add(new Ray(new Vector(-1, 1, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(0, 1, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(1, 1, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(-1, 0, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(0, 0, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(1, 0, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(-1, -1, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(0, -1, -1), new Point3D(0, 0, 0)));
+        ray_list.add(new Ray(new Vector(1, -1, -1), new Point3D(0, 0, 0)));
 
-        //parallel
-        Point3D p = tester.get_p0().scale(3);
-        Vector v = new Vector(tester.get_p0(),p);
-        v.normalize();
-        Ray ray = new Ray(v,new Point3D(0,0,0));
-        list = (ArrayList <Point3D>) tester.findIntersections(ray);
-        assertTrue(list.isEmpty());
-        list.clear();
+        ArrayList <Point3D> intersections = new ArrayList <>();
+        Plane p = new Plane(new Point3D(0, 0, -1), new Vector(0, 0, 1));
 
-        //cross
-        ray.set_direction(tester.get_N());
-        ray.set_POO(tester.get_p0().add(tester.get_N().scale(-1)));
-        list = (ArrayList <Point3D>) tester.findIntersections(ray);
-        assertTrue(list.get(0).equals(tester.get_p0()));
-        list.clear();
-//TODO these tests
-      /*  //some intersect Ray
-        Plane tester2 = new Plane(new Point3D(1,2,4),new Vector(new Point3D(0,4,3)));
-        ray.set_direction(new Vector(new Point3D(20,20,20)));
-        ray.set_POO(new Point3D(0,0,0));
-        list = (ArrayList <Point3D>) tester.findIntersections(ray);
-        Point3D point = tester2.get_p0().subtract(new Vector(list.get(0)));
-        assertTrue(tester2.get_N().dotProduct(new Vector(point))==0);
-        list.clear();
+        for (Ray r : ray_list) {
+            intersections.addAll(p.findIntersections(r));
+        }
+        assertTrue(intersections.size() == 9);
+
+        p.set_N(new Vector(0.5, 0, -1));
+        intersections.clear();
+        for (Ray r : ray_list) {
+            addAll(p.findIntersections(r), intersections);
+        }
+        assertTrue(intersections.size() == 9);
+
+        p.set_N(new Vector(1, 0, -1));
+        intersections.clear();
+        for (Ray r : ray_list) {
+            addAll(p.findIntersections(r), intersections);
+        }
+        assertTrue(intersections.size() == 6);
+
+        p.set_N(new Vector(1, 0, 0));
+        intersections.clear();
+        for (Ray r : ray_list) {
+            addAll(p.findIntersections(r), intersections);
+        }
+        assertTrue(intersections.isEmpty());
+
+        p.set_N(new Vector(0, 0, -1));
+        p.set_p0(new Point3D(0,0,0));
+        intersections.clear();
+        for (Ray r : ray_list) {
+            addAll(p.findIntersections(r), intersections);
+        }
+        assertTrue(intersections.size() == 9);
+
+        p.set_p0(new Point3D(0,0,1));
+        intersections.clear();
+        for (Ray r : ray_list) {
+            addAll(p.findIntersections(r), intersections);
+        }
+        assertTrue(intersections.isEmpty());
 
 
-        //Ray that comes out from the plane
-        ray.set_direction(new Vector(new Point3D(1,1,1)));
-        ray.set_POO(new Point3D(0,0,0));
-        list = (ArrayList <Point3D>) tester.findIntersections(ray);
-        assertTrue(list.isEmpty());
-        list.clear();
+            }//end of find intersection
 
-        //non intersect Ray
-
-
-*/
-     //the point of the ray is the point of the plane - throw exeption
-        ray.set_POO(tester.get_p0());
-        list = (ArrayList <Point3D>) tester.findIntersections(ray);
-    }
+        private void addAll (List < Point3D > from, ArrayList < Point3D > to){
+            while (!from.isEmpty()) {
+                to.add(from.get(0));
+                from.remove(0);
+            }
+        }
 
 
 }
