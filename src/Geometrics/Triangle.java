@@ -35,16 +35,16 @@ public class Triangle implements Geometry {
 
     /*getters*/
 
-    public Point3D get_p1() {
-        return _p1;
+     public Point3D get_p1() {
+        return new Point3D(_p1);
     }
 
     public Point3D get_p2() {
-        return _p2;
+        return new Point3D(_p2);
     }
 
     public Point3D get_p3() {
-        return _p3;
+        return new Point3D(_p3);
     }
 
     /*setters*/

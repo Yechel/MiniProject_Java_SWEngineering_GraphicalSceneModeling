@@ -45,11 +45,11 @@ public class Vector {
 
 
     public Point3D get_head() {
-        return _head;
+        return new Point3D(_head);
     }
 
     public Point3D get_tail() {
-        return _tail;
+        return new Point3D(_tail);
     }
 
 
@@ -101,7 +101,7 @@ public class Vector {
     }
 
     public Vector scale(double d) {
-        get_head().scale(d);
+        set_head(get_head().scale(d));
         return this;
     }
 

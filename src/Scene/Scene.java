@@ -33,7 +33,7 @@ public class Scene {
         set_ambientLight(new AmbientLight(new Color(255,255,255), 1));
         set_geometries(new ArrayList <>()  );
         set_camera(new Camera());
-        set_screenDistance(50);
+        set_screenDistance(500);
     }
 
 

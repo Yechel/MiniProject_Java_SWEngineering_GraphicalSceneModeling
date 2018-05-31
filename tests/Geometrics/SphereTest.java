@@ -92,10 +92,9 @@ public class SphereTest {
             addAll(s.findIntersections(r) ,intersections);
         }
         assertTrue(intersections.size() == 18);
-
-
-
     }
+
+
 
     private void addAll(List<Point3D> from, ArrayList<Point3D> to) {
         while(!from.isEmpty())

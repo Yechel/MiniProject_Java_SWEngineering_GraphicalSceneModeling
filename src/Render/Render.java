@@ -4,6 +4,7 @@ import Geometrics.Geometry;
 import Primitives.Color;
 import Primitives.Point3D;
 import Primitives.Ray;
+import Primitives.Vector;
 import Scene.Scene;
 
 import java.util.ArrayList;
@@ -40,13 +41,13 @@ public class Render {
         for (int i = 0; i < get_imageWriter().get_Nx(); i++) {
             for (int j = 0; j < get_imageWriter().get_Ny(); j++) {
                 Ray ray = get_scene().get_camera().constructRayThroughPixel
-                        (get_imageWriter().get_Nx(),
-                                get_imageWriter().get_Ny(),
-                                i, j,
-                                get_scene().get_screenDistance(),
-                                get_imageWriter().get_imageWidth(),
-                                get_imageWriter().get_imageHeight());
-                List <Point3D> intersectionPoints = getSceneRayIntersections(ray);
+                        (get_imageWriter().get_Nx(), get_imageWriter().get_Ny(),
+                                i, j, get_scene().get_screenDistance(),
+                                get_imageWriter().get_imageWidth(), get_imageWriter().get_imageHeight());
+                ArrayList <Point3D> intersectionPoints = new ArrayList <>();
+                get_scene().get_geometries().forEach(geometry -> {
+                    addIntersectionPoints(intersectionPoints, (ArrayList <Point3D>) geometry.findIntersections(ray));
+                });
                 if (intersectionPoints.isEmpty()) {
                     get_imageWriter().writePixel(j, i, get_scene().get_background());
                 } else {
@@ -94,17 +95,6 @@ public class Render {
         return minDistancePoint;
     }
 
-    private ArrayList <Point3D> getSceneRayIntersections(Ray ray) {
-        Iterator <Geometry> geometries = get_scene().getGeometriesIterator();
-        ArrayList <Point3D> intersectionPoints = new ArrayList <>();
-        while (geometries.hasNext()) {
-            Geometry geometry = geometries.next();
-            ArrayList <Point3D> geometryIntersectionPoints = (ArrayList <Point3D>) geometry.findIntersections(ray);
-            addIntersectionPoints(intersectionPoints, geometryIntersectionPoints);
-        }
-        return intersectionPoints;
-    }
-
     private void addIntersectionPoints(ArrayList <Point3D> toIntersectionPoints, ArrayList <Point3D> fromGeometryIntersectionPoints) {
         for (Point3D p : fromGeometryIntersectionPoints) {
             toIntersectionPoints.add(p);
@@ -114,3 +104,16 @@ public class Render {
 }
 
 
+/*
+    private ArrayList <Point3D> getSceneRayIntersections(Ray ray) {
+        Iterator <Geometry> geometries = get_scene().getGeometriesIterator();
+        ArrayList <Point3D> intersectionPoints = new ArrayList <>();
+
+
+        while (geometries.hasNext()) {
+            Geometry geometry = geometries.next();
+            ArrayList <Point3D> geometryIntersectionPoints = (ArrayList <Point3D>) geometry.findIntersections(ray);
+            addIntersectionPoints(intersectionPoints, geometryIntersectionPoints);
+        }
+        return intersectionPoints;
+    }*/
