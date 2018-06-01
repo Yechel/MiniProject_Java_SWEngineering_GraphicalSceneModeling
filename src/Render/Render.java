@@ -52,6 +52,8 @@ public class Render {
                     get_imageWriter().writePixel(j, i, get_scene().get_background());
                 } else {
                     Point3D closestPoint = getClosestPoint(intersectionPoints);
+                  Vector v = new Vector(ray.get_direction().scale(50));
+                    Ray t = new Ray(v,ray.get_POO());
                     get_imageWriter().writePixel(j, i, calcColor(closestPoint));
                 }
             }

@@ -28,7 +28,9 @@ public class Vector {
      * @param tail the tail of the vector
      */
     public Vector(Point3D head, Point3D tail) {
-        set_head(head.subtract(new Vector(tail)));
+        //the points comes as reference -> build new point to not change the head in substract.
+        Point3D new_head = new Point3D(head);
+        set_head(new_head.subtract(new Vector(tail)));
         set_tail(new Point3D(0,0,0));
     }
 

@@ -18,23 +18,23 @@ public class RenderTest {
         Scene scene = new Scene();
        scene.addGeometry(new Sphere(50, new Point3D(0, 0, -500)));
 
-        Triangle triangle = new Triangle(new Point3D( 100, 0, -149),
-                new Point3D(  0, 100, -149),
-                new Point3D( 100, 100, -149));
+        Triangle triangle = new Triangle(new Point3D( 100, 0, -490),
+                new Point3D(  0, 100, -490),
+                new Point3D( 100, 100, -490));
 
-        Triangle triangle2 = new Triangle(new Point3D( -100, 0, -149),
-                new Point3D(  0, 100, -149),
-                new Point3D( -100,100, -149));
+        Triangle triangle2 = new Triangle(new Point3D( -100, 0, -490),
+                new Point3D(  0, 100, -490),
+                new Point3D( -100,100, -490));
 
-        Triangle triangle3 = new Triangle(new Point3D(100, 0, -149),
-                new Point3D(  0, -100, -149),
-                new Point3D(100, -100, -149));
+        Triangle triangle3 = new Triangle(new Point3D(100, 0, -490),
+                new Point3D(  0, -100, -490),
+                new Point3D(100, -100, -490));
 
-        Triangle triangle4 = new Triangle(new Point3D(-100, 0, -149),
-                new Point3D(  0,  -100, -149),
-                new Point3D(-100, -100, -149));
+        Triangle triangle4 = new Triangle(new Point3D(-100, 0, -490),
+                new Point3D(  0,  -100, -490),
+                new Point3D(-100, -100, -490));
 
-       scene.addGeometry(triangle);
+      scene.addGeometry(triangle);
        scene.addGeometry(triangle2);
        scene.addGeometry(triangle3);
        scene.addGeometry(triangle4);

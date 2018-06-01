@@ -35,7 +35,7 @@ public class Triangle implements Geometry {
 
     /*getters*/
 
-     public Point3D get_p1() {
+    public Point3D get_p1() {
         return new Point3D(_p1);
     }
 
@@ -113,13 +113,12 @@ public class Triangle implements Geometry {
         Point3D point = list.get(0);
         Vector v = new Vector(point, ray.get_POO());
         Vector n1 = v1.crossProduct(v2).normalize();
-        Vector n2 = v1.crossProduct(v3).normalize();
+        Vector n2 = v3.crossProduct(v1).normalize();
         Vector n3 = v2.crossProduct(v3).normalize();
-        if (v.dotProduct(v1.crossProduct(v2)) * v.dotProduct(v1.crossProduct(v2)) >= 0) {
-            if (v.dotProduct(v2.crossProduct(v3)) * v.dotProduct(v1.crossProduct(v3)) >= 0) {
-                return list;
-            }
+        if (v.dotProduct(n1) * v.dotProduct(n2) > 0 && v.dotProduct(n2) * v.dotProduct(n3) > 0) {
+            return list;
         }
+
         list.clear();
         return list;
     }
