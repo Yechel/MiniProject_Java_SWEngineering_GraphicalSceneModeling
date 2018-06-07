@@ -1,8 +1,10 @@
 package Elements;
 
 import Primitives.Color;
+import Primitives.Point3D;
+import Primitives.Vector;
 
-public class AmbientLight {
+public class AmbientLight extends Light {
     private Color _color;
     private double _Ka;
 
@@ -27,8 +29,18 @@ public class AmbientLight {
         this._Ka = _Ka;
     }
 
+    @Override
     public Color getIntensity(){
         return new Color(get_color().scale(get_Ka()));
     }
 
+    @Override
+    public Color getIntensity(Point3D point) {
+        return null;
+    }
+
+    @Override
+    public Vector getL(Point3D point) {
+        return null;
+    }
 }

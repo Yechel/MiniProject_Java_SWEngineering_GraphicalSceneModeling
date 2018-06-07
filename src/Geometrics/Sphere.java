@@ -1,30 +1,61 @@
 package Geometrics;
 
-import Primitives.Point3D;
-import Primitives.Ray;
+import Primitives.*;
 import Primitives.Vector;
 
 import java.util.*;
 
 public class Sphere extends RadialGeometry {
     private Point3D _center;
+    private Material _material;
+    private Color _emission;
+
 
     public Point3D get_center() {
-        return _center;
+        return new Point3D(_center);
     }
 
     public void set_center(Point3D _center) {
         this._center = _center;
     }
 
-    public Sphere(double radius, Point3D center) {
+
+    @Override
+    public Material get_material() {
+        return new Material(_material);
+    }
+
+    @Override
+    public void set_material(Material material) {
+        _material = material;
+    }
+
+    @Override
+    public Color get_emission() {
+        return new Color(_emission);
+    }
+
+
+
+    @Override
+    public void set_emission(Color emission) {
+        _emission = emission;
+    }
+
+
+    public Sphere(double radius, Point3D center, Material material, Color emission) {
         super(radius);
         set_center(center);
+        set_material(material);
+        set_emission(emission);
+
     }
 
     public Sphere() {
         super();
         set_center(new Point3D(0, 0, 0));
+        set_material(new Material());
+        set_emission(new Color());
     }
 
     @Override
@@ -56,11 +87,19 @@ public class Sphere extends RadialGeometry {
         double[] t = new double[2];
         t[0] = tm - th;
         t[1] = tm + th;
-        for (double i:t) {
+        for (double i : t) {
             if (i >= 0) {
                 point3DList.add(ray.get_POO().add(ray.get_direction().scale(i)));
             }
         }
         return point3DList;
     }
+
+    @Override
+    public Vector getNormal(Point3D point) {
+        return new Vector(point, get_center()).normalize();
+    }
+
+
+
 }

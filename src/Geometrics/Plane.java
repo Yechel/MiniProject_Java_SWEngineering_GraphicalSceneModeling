@@ -1,9 +1,6 @@
 package Geometrics;
 
-import Primitives.Coordinate;
-import Primitives.Point3D;
-import Primitives.Ray;
-import Primitives.Vector;
+import Primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +10,8 @@ import static java.lang.String.format;
 public class Plane implements Geometry {
     private Vector _N;
     private Point3D _p0;
+    private Material _material;
+    private Color _emission;
 
 
     /*constructors*/
@@ -35,6 +34,21 @@ public class Plane implements Geometry {
         }
         set_N(V.crossProduct(U));
         set_p0(p1);
+    }
+
+    public Plane(Point3D p1, Point3D p2, Point3D p3, Material material,Color emission ) throws IllegalArgumentException {
+       //TODO test that line
+        Vector V = new Vector(p2, p1);
+        Vector U = new Vector(p3, p1);
+        //if the vectors are parallel and cross the same point then they on the same line.
+        if (Math.abs(V.dotProduct(U)) == 1) {
+            throw new IllegalArgumentException("Plane Exeption: the points are in the same line");
+        }
+        set_N(V.crossProduct(U));
+        set_p0(p1);
+        set_material(material);
+        set_emission(emission);
+
     }
 
     public Plane(Plane p) {
@@ -71,7 +85,7 @@ public class Plane implements Geometry {
     //TODO reimplement
     @Override
     public boolean equals(Object obj) throws IllegalArgumentException {
-        if (obj instanceof Plane) { //Palanes are equal if they parallel and the they had the sme normalize vector
+        if (obj instanceof Plane) { //Planes are equal if they parallel and the they had the sme normalize vector
             if (get_p0().equals(((Plane) obj).get_p0())) {
                 return (get_N().equals(((Plane) obj).get_N().scale(-1)) ||
                         get_N().equals(((Plane) obj).get_N()));
@@ -113,6 +127,32 @@ public class Plane implements Geometry {
             intersections.add(p);
         }
         return intersections;
+    }
+
+    @Override
+    public Vector getNormal(Point3D point) {
+        return get_N();
+    }
+
+    @Override
+    public Material get_material() {
+        return new Material(_material);
+    }
+
+    @Override
+    public void set_material(Material material) {
+        _material = material;
+    }
+
+    @Override
+    public Color get_emission() {
+        return new Color(_emission);
+    }
+
+
+    @Override
+    public void set_emission(Color emission) {
+        _emission = emission;
     }
 
 

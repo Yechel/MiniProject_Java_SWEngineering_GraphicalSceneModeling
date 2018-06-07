@@ -36,12 +36,12 @@ public class Vector {
 
     /**
      * sets the point(x,y,z) as a head of the vector
-     * @param x
-     * @param y
-     * @param z
+     * @param up
+     * @param right
+     * @param to
      */
-    public Vector(double x, double y, double z) {
-        set_head(new Point3D(x, y, z));
+    public Vector(double up, double right, double to) {
+        set_head(new Point3D(up, right, to));
         set_tail(new Point3D(0, 0, 0));
     }
 

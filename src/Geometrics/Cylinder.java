@@ -1,8 +1,6 @@
 package Geometrics;
 
-import Primitives.Point3D;
-import Primitives.Ray;
-import Primitives.Vector;
+import Primitives.*;
 
 import java.util.List;
 
@@ -76,4 +74,31 @@ public class Cylinder extends RadialGeometry {
     public List<Point3D> findIntersections(Ray ray) {
         return null;
     }
+
+    @Override
+    public Vector getNormal(Point3D point) {
+        return null;
+    }
+
+    @Override
+    public void set_material(Material material) {
+
+    }
+
+    @Override
+    public Material get_material() {
+        return null;
+    }
+
+    @Override
+    public void set_emission(Color color) {
+
+    }
+
+    @Override
+    public Color get_emission() {
+        return null;
+    }
+
+
 }

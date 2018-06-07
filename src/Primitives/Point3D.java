@@ -31,9 +31,9 @@ public class Point3D extends Point2D {
         set_z(z.get_coordinate());
     }
 
-    public Point3D(double x, double y, double z) {
-        super(x, y);
-        set_z(z);
+    public Point3D(double up, double right, double to) {
+        super(up, right);
+        set_z(to);
     }
 
     public Point3D(Point2D p, Coordinate z) {
