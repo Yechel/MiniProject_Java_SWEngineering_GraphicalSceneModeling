@@ -105,7 +105,10 @@ public class Render {
         return color.get_color();
     }
 
-    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
+    private Color calcSpecular(double ks, Vector _l, Vector _n, Vector _v, int nShininess, Color lightIntensity) {
+        Vector v = new Vector(_v);
+        Vector n = new Vector(_n);
+        Vector l = new Vector(_l);
         Vector r = l.subtract(n.scale(l.dotProduct(n)).scale(2));
         double vectorProduct = Math.pow(r.dotProduct(v.scale(-1)), nShininess);
         return lightIntensity.scale(vectorProduct).scale(ks);
