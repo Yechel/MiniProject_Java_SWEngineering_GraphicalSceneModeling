@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Render {
     private Scene _scene;
     private ImageWriter _imageWriter;
-    private final int MAX_CALC_COLOR_LEVEL = 4;
+    private final int MAX_CALC_COLOR_LEVEL = 6;
 
     public Scene get_scene() {
         return _scene;
@@ -127,6 +127,7 @@ public class Render {
             Color refractedLight = (new Color(refractedColor)).scale(kt);
             color.add(refractedLight);
         }
+
         return color.get_color();
     }
 
