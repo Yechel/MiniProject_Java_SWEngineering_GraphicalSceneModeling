@@ -93,7 +93,7 @@ public class Render {
         Color color = ambientLight.add(emissionLight);
         //  Vector v = new Vector(p, get_scene().get_camera().get_P0()).normalize();
         Vector v = inRay.get_direction();
-       // int hits = 0;
+        int hits = 0;
         for (LightSource lightSrc : get_scene().get_lights()) {
             Color lightIntensity = lightSrc.getIntensity(p);
             Vector l = lightSrc.getL(p);
@@ -101,13 +101,13 @@ public class Render {
                 if (!occluded(l, p)) {
                     color.add(calcDiffusive(kd, l, n, lightIntensity));
                     color.add(calcSpecular(ks, l, n, v, nShininess, lightIntensity));
-                 //   hits +=1;
+                    hits +=1;
                 }
             }
         }
 
-      //  color.scale(hits/get_scene().get_lights().size());
-
+        color.scale(hits/get_scene().get_lights().size());
+/*
         //reflected Light
         Ray reflectedRay = constructReflectedRay(n, p, inRay);
         Point3D reflectedPoint = findClosestIntersections(reflectedRay);
@@ -127,6 +127,7 @@ public class Render {
             Color refractedLight = (new Color(refractedColor)).scale(kt);
             color.add(refractedLight);
         }
+        */
         return color.get_color();
     }
 
