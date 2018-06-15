@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Render {
     private Scene _scene;
     private ImageWriter _imageWriter;
-    private final int MAX_CALC_COLOR_LEVEL = 6;
+    private final int MAX_CALC_COLOR_LEVEL = 5;
 
     public Scene get_scene() {
         return _scene;
@@ -76,59 +76,54 @@ public class Render {
     }
 
     private java.awt.Color calcColor(Geometry geometry, Point3D p, Ray inRay) {
-        return calcColor(geometry, p, inRay, MAX_CALC_COLOR_LEVEL, 0.1);
+         return calcColor(geometry, p, inRay, MAX_CALC_COLOR_LEVEL, 0.1);
     }
 
-
-    private java.awt.Color calcColor(Geometry geometry, Point3D p, Ray inRay, int level, double k) {
-        if (level == 0 || Coordinate.ZERO.equals(new Coordinate(k))) {
+    private java.awt.Color calcColor(Geometry geometry, Point3D p ,Ray inRay, int level, double k) {
+        if (level == 0 || k == 0) {
             return java.awt.Color.BLACK;
         }
         Color ambientLight = get_scene().get_ambientLight().getIntensity();
         Color emissionLight = geometry.get_emission();
+        Color currentColor = ambientLight.add(emissionLight);
         Vector n = geometry.getNormal(p);
         int nShininess = geometry.get_material().get_nShininess();
         double kd = geometry.get_material().get_Kd();
         double ks = geometry.get_material().get_Ks();
-        Color color = ambientLight.add(emissionLight);
-        //  Vector v = new Vector(p, get_scene().get_camera().get_P0()).normalize();
-        Vector v = inRay.get_direction();
-       // int hits = 0;
+
+          Vector v = new Vector(p, get_scene().get_camera().get_P0()).normalize();
+     //   Vector v = inRay.get_direction();
+        // int hits = 0;
         for (LightSource lightSrc : get_scene().get_lights()) {
             Color lightIntensity = lightSrc.getIntensity(p);
             Vector l = lightSrc.getL(p);
             if (n.dotProduct(l) * n.dotProduct(v) > 0) {
                 if (!occluded(l, p)) {
-                    color.add(calcDiffusive(kd, l, n, lightIntensity));
-                    color.add(calcSpecular(ks, l, n, v, nShininess, lightIntensity));
-                 //   hits +=1;
+                    currentColor.add(calcDiffusive(kd, l, n, lightIntensity));
+                    currentColor.add(calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                    //   hits +=1;
                 }
             }
         }
 
-      //  color.scale(hits/get_scene().get_lights().size());
-
+        //  color.scale(hits/get_scene().get_lights().size());
         //reflected Light
         Ray reflectedRay = constructReflectedRay(n, p, inRay);
         Point3D reflectedPoint = findClosestIntersections(reflectedRay);
         if (reflectedPoint != null) {
             double kr = geometry.get_material().get_Kr();
             java.awt.Color reflectedColor = calcColor(geometry, reflectedPoint, reflectedRay, level - 1, k * kr);
-            Color reflectedLight = (new Color(reflectedColor)).scale(kr);
-            color.add(reflectedLight);
+            currentColor.add(new Color(reflectedColor).scale(kr));
         }
-
         //refracted Light
         Ray refractedRay = constructRefractedRay(p, inRay);
         Point3D refractedPoint = findClosestIntersections(refractedRay);
         if (refractedPoint != null) {
             double kt = geometry.get_material().get_Kt();
             java.awt.Color refractedColor = calcColor(geometry, refractedPoint, refractedRay, level - 1, k * kt);
-            Color refractedLight = (new Color(refractedColor)).scale(kt);
-            color.add(refractedLight);
+            currentColor.add(new Color(refractedColor).scale(kt));
         }
-
-        return color.get_color();
+        return currentColor.get_color();
     }
 
 
@@ -182,24 +177,22 @@ public class Render {
 
     //assuming that the refraction index is 1 so inRay direction is outray....
     private Ray constructRefractedRay(Point3D p, Ray inRay) {
-        Vector epsVector = inRay.get_direction();
-        Point3D epsPoint = p.add(epsVector.scale(2));
-        return new Ray(inRay.get_direction(), epsPoint);
+        return new Ray(inRay.get_direction(), p);
     }
 
     private boolean occluded(Vector l, Point3D p) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(lightDirection, p);
         HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = findIntersectionsFromRay(lightRay);
-        if (!intersectionPoints.isEmpty()) { // if there is points that intersected.
-            return true;
-        }
+
         for (HashMap.Entry <Geometry, ArrayList <Point3D>> entry : intersectionPoints.entrySet()) {
             //if at least one of them is not refracted ( Kt =='t 0)  so the point is occluded
+            //if intersectionPoints is empty so it will skip to false.
             if (entry.getKey().get_material().get_Kt() == 0) {
                 return true;
             }
         }
+
         return false;
     }
 

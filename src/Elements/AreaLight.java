@@ -34,9 +34,9 @@ public class AreaLight extends Light implements LightSource {
         _areaLights = new ArrayList <>();
         _center = pl;
 
-        for (int x = 0; x < 6; x += 5) {
-            for (int y = 0; y < 6; y += 5) {
-                for (int z = 0; z < 6; z += 5) {
+        for (int x = 0; x < 11; x += 10) {
+            for (int y = 0; y < 11; y += 10) {
+                for (int z = 0; z < 11; z += 10) {
                     Point3D newPosition = _center.get_position();
                     newPosition.add(new Vector(new Point3D(x, y, z)));
                     PointLight newPl = new PointLight(_center);
@@ -46,6 +46,8 @@ public class AreaLight extends Light implements LightSource {
             }
         }
     }
+
+
 
 
     @Override

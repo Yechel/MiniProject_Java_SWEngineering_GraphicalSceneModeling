@@ -1,10 +1,11 @@
 package Elements;
 
+import Parser.SceneDescriptor;
 import Primitives.Point3D;
 import Primitives.Ray;
 import Primitives.Vector;
 
-public class Camera {
+public class Camera extends SceneDescriptor {
     private Point3D _P0;
     private Vector _vUp;
     private Vector _vRight;
