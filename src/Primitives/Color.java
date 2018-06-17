@@ -70,7 +70,7 @@ public class Color {
      * @param i number between -100 to 100 to scale by precent
      * @return an update color.
      */
-    public Color scale(double i) {
+    public Color    scale(double i) {
         return new Color(scale(get_color().getRed(), i),
                 scale(get_color().getGreen(), i),
                 scale(get_color().getBlue(), i));

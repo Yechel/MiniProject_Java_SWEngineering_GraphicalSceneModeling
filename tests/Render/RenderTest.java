@@ -336,23 +336,25 @@ public class RenderTest {
         ///////////GEOMETRIES/////////////
         //////////////////////////////////
         scene.addGeometry(new Sphere(50, new Point3D(0, -0, -440),
-                new Material(1, 1, 1, 1, 5),
+                new Material(1, 1, 0, 0, 5),
                 new Color(java.awt.Color.ORANGE)));
         scene.addGeometry(new Plane(new Point3D(0, 0, -506), new Vector(0, 0, 1),
-                new Material(1, 1, 1, 1, 15), new Color(java.awt.Color.DARK_GRAY)));
-        Triangle triangle = new Triangle(new Point3D(250, 0, -250),
+                new Material(1, 1, 0, 0, 15), new Color(java.awt.Color.DARK_GRAY)));
+     /*   Triangle triangle = new Triangle(new Point3D(250, 0, -250),
                 new Point3D(0, 100, -250),
                 new Point3D(0, -100, -250)
-                , new Material(1, 1, 1, 1, 15), new Color(25, 200, 10));
+                , new Material(1, 1, 1, 1, 15), new Color(25, 200, 10));*/
 
 
         /////////////////////////////////////
         ////////////////LIGHTS///////////////
         /////////////////////////////////////
+
         ArrayList <Light> lights = new ArrayList <>();
         lights.add(new SpotLight(new Color(255, 255, 255)
-                , new Point3D(250, 250, -400),
-                0, 0.0001, 0.00000005, new Vector(-2, -2, 1)));
+                , new Point3D(250, 250, -350),
+                0, 0, 0.000001, new Vector(-2, -2, 1)));
+
 
 
         ///////////////////////////////////////
@@ -396,7 +398,7 @@ public class RenderTest {
         //////////RENDERING ATTRIBUTES/////////
         ///////////////////////////////////////
         scene.set_lights(areaLights.get_areaLights());
-        ImageWriter imageWriter = new ImageWriter("Render test - softShadows32", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Render test - softShadows332", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();
