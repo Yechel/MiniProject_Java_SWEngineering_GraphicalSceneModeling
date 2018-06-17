@@ -114,7 +114,7 @@ public class RenderTest {
 
     @Test
     public void lightRendering_Shadow3() throws Exception {
-//TODO need to take care of the both lights and shadows of the plane
+
         Scene scene = new Scene();
 
         //////////////////////////////////
@@ -162,10 +162,10 @@ public class RenderTest {
                 new Material(1, 1, 1, 0, 8),
                 new Color(0, 100, 255)));
         scene.addGeometry(new Sphere(100, new Point3D(0, 0, -500),
-                new Material(1, 1, 0.5, 0.5, 8),
+                new Material(1, 1, 0.5, 1, 8),
                 new Color(50, 20, 20)));
         scene.addGeometry(new Sphere(30, new Point3D(80, -80, -350),
-                new Material(1, 1, 0.5, 0.5, 8),
+                new Material(1, 1, 0.5, 1, 8),
                 new Color(20, 20, 50)));
        /*  scene.addGeometry(new Triangle(new Point3D(50, -100, -400),
                 new Point3D(0, -110, -500),
@@ -187,7 +187,7 @@ public class RenderTest {
         //////////RENDERING ATTRIBUTES/////////
         ///////////////////////////////////////
         scene.set_lights(lights);
-        ImageWriter imageWriter = new ImageWriter("Render test - Sphere within Sphere", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Render test - Sphere within Sphere20", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();
@@ -206,26 +206,30 @@ public class RenderTest {
        /* scene.addGeometry(new Sphere(30, new Point3D(50, -50, -430),
                 new Material(1, 1, 3, 1, 5),
                 new Color(java.awt.Color.RED)));*/
-        scene.addGeometry(new Sphere(10, new Point3D(-10, -15, -350),
-                new Material(1, 1, 0.0005, 0.005, 5),
-                new Color(java.awt.Color.BLUE)));
-        scene.addGeometry( new Triangle(new Point3D(80, 45, -300),
+    /*    scene.addGeometry(new Sphere(20, new Point3D(-10, -15, -350),
+                new Material(1, 1, 0.8, 0, 8),
+                new Color(java.awt.Color.BLUE)));*/
+        scene.addGeometry( new Triangle(new Point3D(60, 40, -300),
                 new Point3D(-100, 100, -300),
                 new Point3D(100, -100, -500)
-                , new Material(1, 1, 1, 0, 2), new Color(java.awt.Color.GRAY)));
-        scene.addGeometry( new Triangle(new Point3D(-100, -100, -350),
+                , new Material(1, 1, 0.8, 0, 8), new Color(java.awt.Color.GRAY)));
+        scene.addGeometry( new Triangle(new Point3D(-80, -100, -350),
                 new Point3D(-100, 100, -300),
                 new Point3D(100, -100, -500)
-                , new Material(1, 1, 1, 0, 2), new Color(java.awt.Color.GRAY)));
+                , new Material(1, 1, 0.8, 0, 8), new Color(java.awt.Color.GREEN)));
 
+        scene.addGeometry( new Triangle(new Point3D(-10, -75, -350),
+                new Point3D(-20, -25, -360),
+                new Point3D(-60, -65, -340)
+                , new Material(1, 1, 0.8, 0, 8), new Color(java.awt.Color.RED)));
 
         /////////////////////////////////////
         ////////////////LIGHTS///////////////
         /////////////////////////////////////
         ArrayList <Light> lights = new ArrayList <>();
-        lights.add(new SpotLight(new Color(255, 0, 0)
+        lights.add(new SpotLight(new Color(50, 50, 50)
                 , new Point3D(100, -100, -400),
-                0, 0.0001, 0.00000005, new Vector(-1, 1, 0)));
+                0.5, 0.0001, 0.000001, new Vector(-1, 1, 0)));
 
 
         ///////////////////////////////////////
@@ -269,6 +273,53 @@ public class RenderTest {
         ///////////////////////////////////////
         scene.set_lights(lights);
         ImageWriter imageWriter = new ImageWriter("Render test - reflection3", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.0005);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+    @Test
+    public void lightRendering_Two_Mirrors_and_SWS() throws Exception {
+
+        Scene scene = new Scene();
+
+        //////////////////////////////////
+        ///////////GEOMETRIES/////////////
+        //////////////////////////////////
+
+        scene.addGeometry(new Sphere(20, new Point3D(-10, -15, -350),
+                new Material(1, 1, 0, 0.8, 8),
+                new Color(java.awt.Color.BLUE)));
+       scene.addGeometry(new Sphere(10, new Point3D(-10, -15, -350),
+                new Material(2, 2, 1, 0.2, 8),
+                new Color(java.awt.Color.RED)));
+
+        scene.addGeometry( new Triangle(new Point3D(-50, -150, -500),
+                new Point3D(-50, 150, -400),
+                new Point3D(175, 0, -450)
+                , new Material(2, 2, 1, 0, 8), new Color(java.awt.Color.GRAY)));
+       scene.addGeometry( new Triangle(new Point3D(-50, -150, -500),
+                new Point3D(-50, 150, -400),
+                new Point3D(-130, -40, -200)
+                , new Material(2, 2, 1, 0,5), new Color(java.awt.Color.GRAY)));
+
+
+
+        /////////////////////////////////////
+        ////////////////LIGHTS///////////////
+        /////////////////////////////////////
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new PointLight(new Color(50, 50, 50)
+                , new Point3D(100, -150, -350),
+                0.5, 0.005, 0.0000001/*,new Vector(-1, 1, 0)*/));
+
+
+        ///////////////////////////////////////
+        //////////RENDERING ATTRIBUTES/////////
+        ///////////////////////////////////////
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("Render test - Two_Mirrors_and_SWS", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();
