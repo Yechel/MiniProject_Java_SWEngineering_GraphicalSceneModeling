@@ -1,8 +1,13 @@
 package Geometrics;
 
+import Primitives.Color;
+import Primitives.Material;
+
 public abstract class RadialGeometry implements Geometry{
 
-    protected double _radius;
+    double _radius;
+    private Material _material;
+    private Color _emission;
 
     public RadialGeometry(double radius) {
         set_radius(radius);
@@ -18,6 +23,26 @@ public abstract class RadialGeometry implements Geometry{
 
     public void set_radius(double _radius) {
         this._radius = _radius;
+    }
+
+
+    public Material get_material() {
+        return new Material(_material);
+    }
+
+
+    public void set_material(Material material) {
+        _material = material;
+    }
+
+
+    public Color get_emission() {
+        return new Color(_emission);
+    }
+
+
+    public void set_emission(Color emission) {
+        _emission = emission;
     }
 
     @Override

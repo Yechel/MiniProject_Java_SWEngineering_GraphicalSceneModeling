@@ -6,41 +6,28 @@ import Primitives.Vector;
 import java.util.*;
 
 public class Sphere extends RadialGeometry {
-    private Point3D _center;
-    private Material _material;
-    private Color _emission;
 
+    private Point3D _center;
+
+    ///////////////////////////
+    //////////getters//////////
+    ///////////////////////////
 
     public Point3D get_center() {
         return new Point3D(_center);
     }
 
+    ////////////////////////////
+    //////////setters//////////
+    ///////////////////////////
+
     public void set_center(Point3D _center) {
         this._center = _center;
     }
 
-
-    @Override
-    public Material get_material() {
-        return new Material(_material);
-    }
-
-    @Override
-    public void set_material(Material material) {
-        _material = material;
-    }
-
-    @Override
-    public Color get_emission() {
-        return new Color(_emission);
-    }
-
-
-
-    @Override
-    public void set_emission(Color emission) {
-        _emission = emission;
-    }
+    ////////////////////////////
+    ////////constructors////////
+    ///////////////////////////
 
 
     public Sphere(double radius, Point3D center, Material material, Color emission) {
@@ -58,6 +45,9 @@ public class Sphere extends RadialGeometry {
         set_emission(new Color());
     }
 
+    ///////////////////////////
+
+
     @Override
     public String toString() {
         return String.format("Sphere: radius=%s, center=%s.", get_radius(), get_center());
@@ -74,6 +64,10 @@ public class Sphere extends RadialGeometry {
     }
 
 
+    /**
+     * @param ray
+     * @return list of points that intersect with the given raty
+     */
     @Override
     public List <Point3D> findIntersections(Ray ray) {
         ArrayList <Point3D> point3DList = new ArrayList <Point3D>();
@@ -99,7 +93,6 @@ public class Sphere extends RadialGeometry {
     public Vector getNormal(Point3D point) {
         return new Vector(point, get_center()).normalize();
     }
-
 
 
 }

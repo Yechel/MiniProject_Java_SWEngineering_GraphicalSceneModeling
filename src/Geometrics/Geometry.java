@@ -4,6 +4,10 @@ import Primitives.*;
 
 import java.util.List;
 
+
+/**
+ * interface that every Geometry have to implement
+ */
 public interface Geometry {
 
 

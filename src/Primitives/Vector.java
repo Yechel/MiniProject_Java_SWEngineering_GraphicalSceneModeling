@@ -75,13 +75,13 @@ public class Vector {
 
     public Vector crossProduct(Vector v) {
         Point3D u = new Point3D();
-        u.set_x((get_head().get_y().mult(v.get_head().get_z())).get_coordinate());
-        u.set_y((get_head().get_z().mult(v.get_head().get_x())).get_coordinate());
-        u.set_z((get_head().get_x().mult(v.get_head().get_y())).get_coordinate());
+        u.set_up((get_head().get_right().mult(v.get_head().get_to())).get_coordinate());
+        u.set_right((get_head().get_to().mult(v.get_head().get_up())).get_coordinate());
+        u.set_to((get_head().get_up().mult(v.get_head().get_right())).get_coordinate());
         Point3D w = new Point3D();
-        w.set_x((get_head().get_z().mult(v.get_head().get_y())).get_coordinate());
-        w.set_y((get_head().get_x().mult(v.get_head().get_z())).get_coordinate());
-        w.set_z((get_head().get_y().mult(v.get_head().get_x())).get_coordinate());
+        w.set_up((get_head().get_to().mult(v.get_head().get_right())).get_coordinate());
+        w.set_right((get_head().get_up().mult(v.get_head().get_to())).get_coordinate());
+        w.set_to((get_head().get_right().mult(v.get_head().get_up())).get_coordinate());
         return new Vector(u.subtract(new Vector(w)));
     }
 
@@ -122,9 +122,9 @@ public class Vector {
     }
 
     private boolean isZero() {
-        return (get_head().get_x().get_coordinate() == 0 &&
-                get_head().get_y().get_coordinate() == 0 &&
-                get_head().get_z().get_coordinate() == 0);
+        return (get_head().get_up().get_coordinate() == 0 &&
+                get_head().get_right().get_coordinate() == 0 &&
+                get_head().get_to().get_coordinate() == 0);
     }
 
     public Vector add(Vector v) {
@@ -139,9 +139,9 @@ public class Vector {
     }
 
     public double dotProduct(Vector v) {
-             return (get_head().get_x().mult(v.get_head().get_x())).get_coordinate() +
-                (get_head().get_y().mult(v.get_head().get_y())).get_coordinate() +
-                (get_head().get_z().mult(v.get_head().get_z())).get_coordinate();
+             return (get_head().get_up().mult(v.get_head().get_up())).get_coordinate() +
+                (get_head().get_right().mult(v.get_head().get_right())).get_coordinate() +
+                (get_head().get_to().mult(v.get_head().get_to())).get_coordinate();
     }
 
 

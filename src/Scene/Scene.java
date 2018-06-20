@@ -4,7 +4,10 @@ import Elements.AmbientLight;
 import Elements.Camera;
 import Elements.Light;
 import Geometrics.Geometry;
+import Geometrics.Triangle;
 import Primitives.Color;
+import Primitives.Material;
+import Primitives.Point3D;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +18,7 @@ public class Scene {
     private Color _background;
     private AmbientLight _ambientLight;
     private ArrayList <Geometry> _geometries;
-    private List<Light> lights;
+    private List <Light> lights;
     private Camera _camera;
     private double _screenDistance;
 
@@ -29,18 +32,16 @@ public class Scene {
         set_screenDistance(screenDistance);
     }
 
-    public Scene(){
+    public Scene() {
 
         set_sceneName("default Scene");
-        set_background(new Color(0,0,0));
-        set_ambientLight(new AmbientLight(new Color(255,255,255), 1));
-        set_geometries(new ArrayList <>()  );
+        set_background(new Color(0, 0, 0));
+        set_ambientLight(new AmbientLight(new Color(255, 255, 255), 1));
+        set_geometries(new ArrayList <>());
         set_camera(new Camera());
-        set_lights(new ArrayList<> ());
+        set_lights(new ArrayList <>());
         set_screenDistance(500);
     }
-
-
 
 
     public String get_sceneName() {
@@ -91,15 +92,14 @@ public class Scene {
         this._screenDistance = _screenDistance;
     }
 
-public void addGeometry(Geometry geometry)
-{
-    get_geometries().add(geometry);
-}
+    public void addGeometry(Geometry geometry) {
+        get_geometries().add(geometry);
+    }
 
-public Iterator<Geometry>getGeometriesIterator(){
-    return get_geometries().iterator();
+    public Iterator <Geometry> getGeometriesIterator() {
+        return get_geometries().iterator();
 
-}
+    }
 
     public List <Light> get_lights() {
         return lights;
@@ -108,4 +108,10 @@ public Iterator<Geometry>getGeometriesIterator(){
     public void set_lights(List <Light> lights) {
         this.lights = lights;
     }
+
+
+
+
+
+
 }

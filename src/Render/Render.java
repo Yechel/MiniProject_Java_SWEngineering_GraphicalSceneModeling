@@ -1,23 +1,22 @@
 package Render;
 
-import Elements.Light;
 import Elements.LightSource;
-import Geometrics.FlatGeometry;
 import Geometrics.Geometry;
+import Geometrics.Triangle;
 import Primitives.*;
 import Scene.Scene;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 
 public class Render {
     private Scene _scene;
     private ImageWriter _imageWriter;
+    //reflected and refracted effect
     private final int MAX_CALC_COLOR_LEVEL = 3;
-    //area lights
-      private final int MAX_RAYS = 20;
-    private final int DISTANCE_BETWEEN_LIGHTS = 75;
+    //soft shadows effect
+    private final int DISTANCE_BETWEEN_LIGHTS = 100;
 
 
     public Scene get_scene() {
@@ -66,7 +65,8 @@ public class Render {
             if (y % interval == 0) {
                 //set line
                 for (int x = 0; x < get_imageWriter().get_Nx(); x++) {
-                    get_imageWriter().writePixel(x, y, color.get_color());
+
+                    get_imageWriter().writePixel(x, y, java.awt.Color.RED);
                 }
             } else {
                 for (int x = 0; x < get_imageWriter().get_Nx(); x = x + interval) {
@@ -99,7 +99,7 @@ public class Render {
         for (LightSource lightSrc : get_scene().get_lights()) {
             Vector l = lightSrc.getL(p);
             if (n.dotProduct(l) * n.dotProduct(v) > 0) {
-                double o = occluded(l, p);
+              /*  double o = occluded(l, p);
                 if (o * k != 0) {
                     Color lightIntensity = lightSrc.getIntensity(p).scale(o);
                     currentColor.add(calcDiffusive(kd, l, n, lightIntensity));
@@ -127,6 +127,8 @@ public class Render {
             Geometry nextGeometry = (Geometry) refractedEntry.keySet().toArray()[0];
             java.awt.Color refractedColor = calcColor(nextGeometry, refractedEntry.get(nextGeometry), refractedRay, level - 1, k * kt);
             currentColor.add(new Color(refractedColor).scale(kt));
+        }*/
+            }
         }
 
         return currentColor.get_color();
@@ -134,7 +136,6 @@ public class Render {
 
 
     private ArrayList <Ray> getAreaRayList(Vector direction, Point3D p) {
-
         double distance = p.distance(direction.get_head());
         ArrayList <Ray> areaRays = new ArrayList <>();
         if (distance == 0) //the point in the light source
@@ -142,18 +143,18 @@ public class Render {
             return areaRays;
         }
         double eps = DISTANCE_BETWEEN_LIGHTS / distance;
-        areaRays.add(new Ray(new Vector(new Point3D(0.1*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.1*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.1*eps)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0.2*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.2*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.2*eps)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0.3*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.3*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.3*eps)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0.4*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.4*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.4*eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.1 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.1 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.1 * eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.15 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.15 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.15 * eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.2 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.2 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.2 * eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.25 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.25 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.25 * eps)).add(direction), p));
         return areaRays;
     }
 
@@ -232,40 +233,28 @@ public class Render {
         return new Ray(inRay.get_direction(), p);
     }
 
+
     private double occluded(Vector l, Point3D p) {
         Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(lightDirection, p);
-        HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = findIntersectionsFromRay(lightRay);
-        //if the point isn't occluded so the scalar will be 1
-        double shadowK = 1;
-        for (HashMap.Entry <Geometry, ArrayList <Point3D>> entry : intersectionPoints.entrySet()) {
-            // for each intersection that the light make the light intensity light will be reduce depend on the kt scalar.
-            shadowK *= entry.getKey().get_material().get_Kt();
-        }
-        return shadowK;
-    }
-/*
-    private double occluded(Vector l, Point3D p) {
-        Vector lightDirection = l.scale(-1); // from point to light source
-        ArrayList<Ray> areaRays = getAreaRayList(lightDirection,p);
-      //  Ray lightRay = new Ray(lightDirection, p);
+        ArrayList <Ray> areaRays = getAreaRayList(lightDirection, p);
+        //  Ray lightRay = new Ray(lightDirection, p);
         double shadowK = 1;
         int numOfIntersectedRay = 1;
-        for (Ray lightRay:areaRays) {
+        for (Ray lightRay : areaRays) {
             double shadowRay = 1;
             HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = findIntersectionsFromRay(lightRay);
             //if the point isn't occluded so the scalar will be 1
             for (HashMap.Entry <Geometry, ArrayList <Point3D>> entry : intersectionPoints.entrySet()) {
                 // for each intersection that the light make the light intensity light will be reduce depend on the kt scalar.
-                   shadowRay *= entry.getKey().get_material().get_Kt();
+                shadowRay *= entry.getKey().get_material().get_Kt();
 
             }
             shadowK += shadowRay;
-            numOfIntersectedRay ++;
+            numOfIntersectedRay++;
         }
 
-        return shadowK/numOfIntersectedRay;
-    }*/
+        return shadowK / numOfIntersectedRay;
+    }
 
 
     private Color calcSpecular(double ks, Vector _l, Vector _n, Vector _v, int nShininess, Color lightIntensity) {
@@ -305,6 +294,7 @@ public class Render {
             toIntersectionPoints.add(p);
         }
     }
+
 
 }
 
