@@ -11,6 +11,7 @@ public class RectangleMesh implements Mesh {
     private ArrayList <Point3D> _pointList = new ArrayList <>();
     private Material _material;
     private Color _emission;
+    private double[] angels;
 
     public Color get_emission() {
         return new Color(_emission);
@@ -24,10 +25,13 @@ public class RectangleMesh implements Mesh {
         return _pointList;
     }
 
-    public void set_pointList(ArrayList <Point3D> _pointList) {
+    public void set_pointList(ArrayList <Point3D> pointList) {
 
         get_pointList().clear();
-        get_pointList().addAll(_pointList);
+        for (Point3D p: pointList
+             ) {
+            get_pointList().add(new Point3D(p));
+        }
     }
 
     @Override
@@ -49,12 +53,14 @@ public class RectangleMesh implements Mesh {
         set_pointList(list);
         set_material(material);
         set_emission(emission);
-    }
+        angels = new double[]{0,0,0};
+}
 
-    public RectangleMesh(ArrayList <Point3D> pointList, Material material, Color emission) {
-        set_pointList(pointList);
-        set_material(material);
-        set_emission(emission);
+    public RectangleMesh(RectangleMesh rectangleMesh) {
+        set_pointList(rectangleMesh.get_pointList());
+        set_material(rectangleMesh.get_material());
+        set_emission(rectangleMesh.get_emission());
+        angels = new double[]{0,0,0};
     }
 
     public void addToX(Point3D p, double up) {
@@ -91,78 +97,97 @@ public class RectangleMesh implements Mesh {
     }
 
 
-    public void rotrateRIGHT(int angle) {
-
-    }
-
-
-    public void rotrateUP(int angle) {
-
-    }
-
-    public void rotrateTO(int size) {
-        Point3D p0 = get_pointList().get(0);
-        Point3D p1 = get_pointList().get(1);
-        Point3D p2 = get_pointList().get(2);
-        Point3D p3 = get_pointList().get(3);
-        p0.set_right(p0.get_right().get_coordinate() - size);
-        p0.set_up(p0.get_up().get_coordinate() - size);
-        p1.set_right(p1.get_right().get_coordinate() - size);
-        p1.set_up(p1.get_up().get_coordinate() + size);
-        p2.set_right(p2.get_right().get_coordinate() + size);
-        p2.set_up(p2.get_up().get_coordinate() + size);
-        p3.set_right(p3.get_right().get_coordinate() + size);
-        p3.set_up(p3.get_up().get_coordinate() - size);
-
-    }
-
-  /*  public void rotrateTO(int angle) {
-
-        for (Point3D p: get_pointList()
-             ) {
-            double x = p.get_right().get_coordinate();
-            double y = p.get_up().get_coordinate();
-
-
-            p.set_right(x + x*Math.cos(Math.toRadians(angle)));
-            p.set_up(y + y *Math.sin(Math.toRadians(angle)));
+    public void rotrateAxisRIGHT(int angle) {
+        double centerY = (get_pointList().get(0).get_up().get_coordinate() +
+                get_pointList().get(2).get_up().get_coordinate()) * 0.5;
+        double centerX = get_pointList().get(0).get_to().get_coordinate();
+        double radius = get_pointList().get(0).distance(get_pointList().get(2)) * 0.5;
+        double deg0;
+        if (get_pointList().get(0).get_to().equals(get_pointList().get(1).get_to())) {
+            deg0 = 90;
+        } else {
+            deg0 = Math.acos((centerX - get_pointList().get(0).get_to().get_coordinate()) / radius);
+            deg0 = Math.toDegrees(deg0);
         }
-
-
-        }*/
-
-
-   /* public void rotrateTO(int angle) {
-        Point3D pUpLeft = get_pointList().get(0);
-        Point3D pUpRight = get_pointList().get(1);
-        Point3D pDownRight = get_pointList().get(2);
-           for (Point3D p : get_pointList()) {
-            double newRight = getNewValueToCos(pUpLeft, pUpRight, pDownRight, p, angle);
-            p.set_right(newRight);
-            double newUP = getNewValueToSin(pUpLeft, pUpRight, pDownRight, p, angle);
-            p.set_right(newUP);
+        double deg[] = new double[4];
+        deg[0] = 180 - deg0;
+        deg[1] = deg0;
+        deg[2] = -deg0;
+        deg[3] = deg0 - 180;
+        int i = 0;
+        for (Point3D p : get_pointList()
+                ) {
+            p.set_to(centerX + radius * Math.cos(Math.toRadians(deg[i] + angle + angels[2])));
+            p.set_up(centerY + radius * Math.sin(Math.toRadians(deg[i] + angle + angels[0])));
+            i++;
         }
-    }*/
-
-/*
-
-    private double getNewValueToSin(Point3D pUpLeft, Point3D pUpRight, Point3D pDownRight, Point3D P, int angle) {
-        double radius = getDis(pUpLeft, pDownRight, 0.5);
-        double center = getDis(pUpLeft, pUpRight, 0.5);
-        double delta = getDis(pUpLeft, pUpRight, 1);
-        double rad = Math.asin(delta / radius);
-        rad += Math.toRadians(angle);
-        return center + radius * Math.sin(rad);
+        angels[0] = angels[0] + angle;
+        angels[2] = angels[2] + angle;
     }
 
-    private double getNewValueToCos(Point3D pUpLeft, Point3D pUpRight, Point3D pDownRight, Point3D P, int angle) {
-        double radius =  pUpLeft.distance(pDownRight)* 0.5;
-        double center = pUpLeft.distance(pUpRight)*0.5;
-        double delta = ;
-        double rad = Math.acos(delta / radius);
-        rad += Math.toRadians(angle);
-        return center + radius * Math.cos(rad);
-    }*/
+
+    public void rotrateAxisUP(int angle) {
+        double centerY = (get_pointList().get(0).get_right().get_coordinate() +
+                get_pointList().get(2).get_right().get_coordinate()) * 0.5;
+        double centerX = get_pointList().get(0).get_to().get_coordinate();
+        double radius = get_pointList().get(0).distance(get_pointList().get(2)) * 0.5;
+        double deg0;
+        if (get_pointList().get(0).get_to().equals(get_pointList().get(1).get_to())) {
+            deg0 = 0;
+        } else {
+            deg0 = Math.acos((centerX - get_pointList().get(0).get_to().get_coordinate()) / radius);
+            deg0 = Math.toDegrees(deg0);
+        }
+        double deg[] = new double[4];
+        deg[0] = 180 - deg0;
+        deg[1] = deg0;
+        deg[2] = -deg0;
+        deg[3] = deg0 - 180;
+        int i = 0;
+        for (Point3D p : get_pointList()
+                ) {
+            p.set_to(centerX + radius * Math.cos(Math.toRadians(deg[i] + angle + angels[2])));
+            p.set_right(centerY + radius * Math.sin(Math.toRadians(deg[i] + angle +angels[1])));
+            i++;
+        }
+        angels[1] = angels[1] + angle;
+        angels[2] = angels[2] + angle;
+    }
+
+    public void rotrateAxisTO(int angle) {
+        double centerX = (get_pointList().get(0).get_right().get_coordinate() +
+                get_pointList().get(2).get_right().get_coordinate()) * 0.5;
+        double centerY = (get_pointList().get(0).get_up().get_coordinate() +
+                get_pointList().get(2).get_up().get_coordinate()) * 0.5;
+        double radius = get_pointList().get(0).distance(get_pointList().get(2)) * 0.5;
+        double deg0;
+        if (get_pointList().get(0).get_right().equals(get_pointList().get(1).get_right())) {
+            deg0 = 90;
+        } else {
+            deg0 = Math.acos((centerX - get_pointList().get(0).get_right().get_coordinate()) / radius);
+            deg0 = Math.toDegrees(deg0);
+        }
+        double deg[] = new double[4];
+        deg[0] = 180 - deg0;
+        deg[1] = deg0;
+        deg[2] = -deg0;
+        deg[3] = deg0 - 180;
+        int i = 0;
+        for (Point3D p : get_pointList()
+                ) {
+            p.set_right(centerX + radius * Math.cos(Math.toRadians(deg[i] + angle + angels[1] )));
+            p.set_up(centerY + radius * Math.sin(Math.toRadians(deg[i] + angle + angels[0])));
+            i++;
+        }
+        angels[1] = angels[1] + angle;
+        angels[0] = angels[0] + angle;
+
+    }
+
+
+
+
+
 
     @Override
     public void move(int up, int right, int to) {
@@ -174,48 +199,26 @@ public class RectangleMesh implements Mesh {
     @Override
     public void rotrate(int upline, int rightline, int toline) {
         if (upline != 0) {
-            rotrateUP(upline);
+            rotrateAxisUP(upline);
         }
         if (rightline != 0) {
-            rotrateRIGHT(rightline);
+            rotrateAxisRIGHT(rightline);
         }
-        if (toline == 0) {
-            //rotrateTO(toline);
+        if (toline != 0) {
+            rotrateAxisTO(toline);
         }
     }
-
-
-
-
- /*   @Override
-    public void rotrateRIGHT(int angle) {
-        double cosa = Math.cos(Math.toRadians(angle));
-        double sina = Math.sin(Math.toRadians(angle));
-        double lenY = get_pointList().get(0).distance(get_pointList().get(3)) * 0.5;
-        double lenX = get_pointList().get(0).distance(get_pointList().get(1)) * 0.5;
-        for (Point3D p : get_pointList()) {
-            addToX(p, -lenX);
-            addToX(p, lenX * sina);
-            addToRIGHT(p, -lenY);
-            addToRIGHT(p, lenX * cosa);
-        }
-    }*/
-
-  /*  @Override
-    public void resize(int percent) {
-
-    }*/
 
 
     @Override
     public ArrayList <Triangle> toTriangle() throws Exception {
         ArrayList <Triangle> square = new ArrayList <>();
-        square.add(new Triangle(get_pointList().get(0).scale(1.05),
+        square.add(new Triangle(get_pointList().get(0),
                 get_pointList().get(1),
-                get_pointList().get(2).scale(1.05), get_material(), get_emission()));
-        square.add(new Triangle(get_pointList().get(2).scale(1.05),
+                get_pointList().get(2), get_material(), get_emission()));
+        square.add(new Triangle(get_pointList().get(2),
                 get_pointList().get(3),
-                get_pointList().get(0).scale(1.05), get_material(), get_emission()));
+                get_pointList().get(0), get_material(), get_emission()));
         return square;
     }
 
