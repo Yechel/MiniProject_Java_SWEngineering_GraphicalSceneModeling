@@ -129,11 +129,12 @@ public class RectangleMesh implements Mesh {
     public void rotrateAxisUP(int angle) {
         double centerY = (get_pointList().get(0).get_right().get_coordinate() +
                 get_pointList().get(2).get_right().get_coordinate()) * 0.5;
-        double centerX = get_pointList().get(0).get_to().get_coordinate();
+        double centerX = (get_pointList().get(0).get_to().get_coordinate() +
+                get_pointList().get(2).get_to().get_coordinate()) * 0.5;;
         double radius = get_pointList().get(0).distance(get_pointList().get(2)) * 0.5;
         double deg0;
         if (get_pointList().get(0).get_to().equals(get_pointList().get(1).get_to())) {
-            deg0 = 0;
+            deg0 = 60;
         } else {
             deg0 = Math.acos((centerX - get_pointList().get(0).get_to().get_coordinate()) / radius);
             deg0 = Math.toDegrees(deg0);
@@ -150,8 +151,7 @@ public class RectangleMesh implements Mesh {
             p.set_right(centerY + radius * Math.sin(Math.toRadians(deg[i] + angle +angels[1])));
             i++;
         }
-        angels[1] = angels[1] + angle;
-        angels[2] = angels[2] + angle;
+
     }
 
     public void rotrateAxisTO(int angle) {
@@ -213,7 +213,8 @@ public class RectangleMesh implements Mesh {
     @Override
     public ArrayList <Triangle> toTriangle() throws Exception {
         ArrayList <Triangle> square = new ArrayList <>();
-        square.add(new Triangle(get_pointList().get(0),
+
+       square.add(new Triangle(get_pointList().get(0),
                 get_pointList().get(1),
                 get_pointList().get(2), get_material(), get_emission()));
         square.add(new Triangle(get_pointList().get(2),

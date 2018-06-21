@@ -5,6 +5,7 @@ import Geometrics.Geometry;
 import Geometrics.Triangle;
 import Primitives.*;
 import Scene.Scene;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,8 +67,9 @@ public class Render {
                 for (int x = 0; x < get_imageWriter().get_Nx(); x++) {
                     if (y == x) {
                         get_imageWriter().writePixel(x, y, java.awt.Color.RED);
+                    } else {
                     }
-                    else   {};
+                    ;
                 }
             } else {
                 for (int x = 0; x < get_imageWriter().get_Nx(); x = x + interval) {
@@ -142,18 +144,18 @@ public class Render {
             return areaRays;
         }
         double eps = DISTANCE_BETWEEN_LIGHTS / distance;
-        areaRays.add(new Ray(new Vector(new Point3D(0.1*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.1*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.1*eps)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0.15*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.15*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.15*eps)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0.2*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.2*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.2*eps)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0.25*eps, 0, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0.25*eps, 0)).add(direction), p));
-        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.25*eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.1 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.1 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.1 * eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.15 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.15 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.15 * eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.2 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.2 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.2 * eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0.25 * eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0.25 * eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.25 * eps)).add(direction), p));
         return areaRays;
     }
 
@@ -235,24 +237,24 @@ public class Render {
 
     private double occluded(Vector l, Point3D p) {
         Vector lightDirection = l.scale(-1); // from point to light source
-        ArrayList<Ray> areaRays = getAreaRayList(lightDirection,p);
-      //  Ray lightRay = new Ray(lightDirection, p);
+        ArrayList <Ray> areaRays = getAreaRayList(lightDirection, p);
+        //  Ray lightRay = new Ray(lightDirection, p);
         double shadowK = 1;
         int numOfIntersectedRay = 1;
-        for (Ray lightRay:areaRays) {
+        for (Ray lightRay : areaRays) {
             double shadowRay = 1;
             HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = findIntersectionsFromRay(lightRay);
             //if the point isn't occluded so the scalar will be 1
             for (HashMap.Entry <Geometry, ArrayList <Point3D>> entry : intersectionPoints.entrySet()) {
                 // for each intersection that the light make the light intensity light will be reduce depend on the kt scalar.
-                   shadowRay *= entry.getKey().get_material().get_Kt();
+                shadowRay *= entry.getKey().get_material().get_Kt();
 
             }
             shadowK += shadowRay;
-            numOfIntersectedRay ++;
+            numOfIntersectedRay++;
         }
 
-        return shadowK/numOfIntersectedRay;
+        return shadowK / numOfIntersectedRay;
     }
 
 
@@ -293,7 +295,6 @@ public class Render {
             toIntersectionPoints.add(p);
         }
     }
-
 
 
 }

@@ -40,6 +40,10 @@ public class Camera extends SceneDescriptor {
 
     public void set_P0(Point3D _P0) {
         this._P0 = _P0;
+        set_vRight(new Vector(get_vRight().get_head(),get_P0()).normalize());
+        set_vTo(new Vector(get_vTo().get_head(),get_P0()).normalize());
+        set_vUp(new Vector(get_vUp().get_head(),get_P0()).normalize());
+
     }
 
     public void set_vUp(Vector _vUp) {
@@ -83,10 +87,11 @@ public class Camera extends SceneDescriptor {
     }
 
     public Camera() {
-        set_P0(new Point3D(0, 0, 0));
         set_vUp(new Vector(new Point3D(0, -1, 0)));
         set_vTo(new Vector(new Point3D(0, 0, -1)));
         set_vRight();
+        set_P0(new Point3D(0, 0, 0));
+
     }
 
     ///////////////////////////

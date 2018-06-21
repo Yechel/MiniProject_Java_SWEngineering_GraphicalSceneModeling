@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 
 public class CameraTest {
     Camera cam = new Camera();
-
     @Test
     public void constructRayThroughPixel() {
         Ray ray = cam.constructRayThroughPixel(3, 3, 3, 3, 100, 150, 150);
