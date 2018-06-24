@@ -53,7 +53,7 @@ class RenderTestForMiniProject {
         //////////RENDERING ATTRIBUTES/////////
         ///////////////////////////////////////
         scene.set_lights(lights);
-        ImageWriter imageWriter = new ImageWriter("Render test - Houses - MinProject", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Render test - Houses - MinProject1", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();
@@ -262,7 +262,6 @@ class RenderTestForMiniProject {
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();
-        //  render.printGrid(50);
         render.get_imageWriter().writeToimage();
     }
 
@@ -270,7 +269,6 @@ class RenderTestForMiniProject {
     public void triangle_test_Table_Test() throws Exception {
 
         Scene scene = new Scene();
-        //   scene.get_camera().set_P0(new Point3D(10,0,0));
         scene.set_background(new Color(150, 150, 100));
         //////////////////////////////////
         ///////////GEOMETRIES/////////////
@@ -372,24 +370,6 @@ class RenderTestForMiniProject {
         plate[5].set_pointList(plate[4].get_pointList());
         plate[5].move(0,150,0);
 
-       // plate[2].move(10, 0, 0);
-       /*plate[2] = new RectangleMesh(20, 200,  plate[0].get_material(),plate[0].get_emission());
-       plate[2].get_pointList().get(1).set_to( plate[1].get_pointList().get(1).get_to().get_coordinate()+ 20);
-        plate[2].get_pointList().get(2).set_to( plate[1].get_pointList().get(2).get_to().get_coordinate()+ 20);
-        plate[2].move(0,-20,0);
-        plate[3] = new RectangleMesh(20, 200,  plate[0].get_material(),plate[0].get_emission());
-        plate[3].get_pointList().get(0).set_to( plate[2].get_pointList().get(0).get_to().get_coordinate()+ 20);
-        plate[3].get_pointList().get(3).set_to( plate[2].get_pointList().get(3).get_to().get_coordinate()+ 20);
-        plate[3].move(0,-20,-20);
-        plate[4] = new RectangleMesh(20, 150, plate[0].get_material(),plate[0].get_emission());
-        plate[4].get_pointList().get(1).set_to( plate[3].get_pointList().get(1).get_to().get_coordinate()+ 20);
-        plate[4].get_pointList().get(2).set_to( plate[3].get_pointList().get(2).get_to().get_coordinate()+ 20);
-        plate[4].move(0,0,-20);
-        plate[5] = new RectangleMesh(20, 150, plate[0].get_material(),plate[0].get_emission());
-        plate[5].get_pointList().get(1).set_to( plate[3].get_pointList().get(1).get_to().get_coordinate()+ 20);
-        plate[5].get_pointList().get(2).set_to( plate[3].get_pointList().get(2).get_to().get_coordinate()+ 20);
-        plate[5].move(0,0,-20);
-*/
         for (RectangleMesh rec : plate
                 ) {
             for (Triangle t : rec.toTriangle()) {
@@ -397,48 +377,18 @@ class RenderTestForMiniProject {
             }
         }
 
-        scene.addGeometry(new Sphere(10, new Point3D(-40, 0, -400),
+        scene.addGeometry(new Sphere(10, new Point3D(0, 0, -400),
                 new Material(1, 1, 0.9, 0, 5),
                 new Color(java.awt.Color.YELLOW)));
-        //scene.addGeometry(new Plane(new Point3D(0,0,-150),new Vector(new Point3D(1,0,0)), new Material(1,1,0,0,8),new Color(java.awt.Color.GRAY) ));
-
-
-
-
-
-
-
-
-       /* leg1[0].get_pointList().get(0).set_to( leg1[0].get_pointList().get(0).get_to().get_coordinate()+ 20);
-        leg1[0].get_pointList().get(3).set_to( leg1[0].get_pointList().get(3).get_to().get_coordinate()+ 20);
-        leg1[1] = new RectangleMesh(150, 20,  leg1[0].get_material(),leg1[0].get_emission());
-        leg1[1].get_pointList().get(1).set_to( leg1[1].get_pointList().get(1).get_to().get_coordinate()+ 20);
-        leg1[1].get_pointList().get(2).set_to( leg1[1].get_pointList().get(2).get_to().get_coordinate()+ 20);
-        leg1[1].move(0,-20,0);
-        leg1[2] = new RectangleMesh(150, 20,  leg1[0].get_material(),leg1[0].get_emission());
-        leg1[2].get_pointList().get(0).set_to( leg1[2].get_pointList().get(0).get_to().get_coordinate()+ 20);
-        leg1[2].get_pointList().get(3).set_to( leg1[2].get_pointList().get(3).get_to().get_coordinate()+ 20);
-        leg1[2].move(0,-20,-20);
-        leg1[3] = new RectangleMesh(150, 20, leg1[0].get_material(),leg1[0].get_emission());
-        leg1[3].get_pointList().get(1).set_to( leg1[3].get_pointList().get(1).get_to().get_coordinate()+ 20);
-        leg1[3].get_pointList().get(2).set_to( leg1[3].get_pointList().get(2).get_to().get_coordinate()+ 20);
-        leg1[3].move(0,0,-20);
-        leg1[3] = new RectangleMesh(150, 20, leg1[0].get_material(),leg1[0].get_emission());
-        leg1[3].get_pointList().get(1).set_to( leg1[3].get_pointList().get(1).get_to().get_coordinate()+ 20);
-        leg1[3].get_pointList().get(2).set_to( leg1[3].get_pointList().get(2).get_to().get_coordinate()+ 20);
-        leg1[3].move(0,0,-20);
-        /* leg1[4] = new RectangleMesh(20, 20,  leg1[0].get_material(),leg1[0].get_emission());
-        leg1[4].get_pointList().set(0,leg1[1].get_pointList().get(0));
-        leg1[4].get_pointList().set(1,leg1[2].get_pointList().get(1));
-        leg1[4].get_pointList().set(2,leg1[1].get_pointList().get(2));
-        leg1[4].get_pointList().set(3,leg1[1].get_pointList().get(3));
-        leg1[4].move(75,0,0);*/
-
-
-
-
-
-
+       RectangleMesh plane =  new RectangleMesh(100, 20, new Material(1,1,0,0,8),new Color(java.awt.Color.GRAY));
+        plane.get_pointList().set(0,new Point3D(-150,-350,0));
+        plane.get_pointList().set(1,new Point3D(-150,-350,-700));
+        plane.get_pointList().set(2,new Point3D(-150,350,-700));
+        plane.get_pointList().set(3,new Point3D(-150,350,0));
+        for (Triangle t: plane.toTriangle()
+             ) {
+            scene.addGeometry(t);
+        }
 
 
         /////////////////////////////////////
@@ -447,7 +397,7 @@ class RenderTestForMiniProject {
 
         ArrayList <Light> lights = new ArrayList <>();
         lights.add(new PointLight(new Color(100,120,20)
-                , new Point3D(100, 50, 0),
+                , new Point3D(100, 100, -250),
                 0, 0, 0.00001));
 
 
@@ -457,7 +407,7 @@ class RenderTestForMiniProject {
         ///////////////////////////////////////
         scene.set_lights(lights);
 
-        ImageWriter imageWriter = new ImageWriter("leg_test_5", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("leg_test_9", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();

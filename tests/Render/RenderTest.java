@@ -16,8 +16,127 @@ import java.util.ArrayList;
 
 public class RenderTest {
 
+    /* test case: 1 sphere in the center, 4 triangles around it, and checking printGrid func*/
     @Test
     public void basicRendering() throws Exception {
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Sphere(50, new Point3D(0, 0, -500),
+                new Material(1, 1, 1, 0, 15),
+                new Color(255, 255, 255)));
+        scene.addGeometry(new Triangle(new Point3D(100, 100, -500),
+                new Point3D(0, 100, -500),
+                new Point3D(100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(0, 255, 255)));
+        scene.addGeometry(new Triangle(new Point3D(-100, 100, -500),
+                new Point3D(0, 100, -500),
+                new Point3D(-100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(25, 200, 10)));
+        scene.addGeometry(new Triangle(new Point3D(100, -100, -500),
+                new Point3D(0, -100, -500),
+                new Point3D(100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(25, 200, 10)));
+        scene.addGeometry(new Triangle(new Point3D(-100, -100, -500),
+                new Point3D(0, -100, -500),
+                new Point3D(-100, 0, -500)
+                , new Material(1, 1, 1, 1, 15), new Color(25, 200, 10)));
+
+
+//
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new PointLight( new Color(255,255,255)
+                ,new Point3D(0,0,-1),0,0,0.000000001 ));
+
+
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("Render test- basic test1", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        render.renderImage();
+        render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+    /* test case: 1 sphere in the center, 4 triangles around it with colors*/
+    @Test
+    public void basicRendering1() throws Exception {
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Sphere(50, new Point3D(0, 0, -500),
+                new Material(1, 1, 1, 0, 15),
+                new Color(255, 255, 255)));
+        scene.addGeometry(new Triangle(new Point3D(100, 100, -500),
+                new Point3D(0, 100, -500),
+                new Point3D(100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(0, 150, 150)));
+        scene.addGeometry(new Triangle(new Point3D(-100, 100, -500),
+                new Point3D(0, 100, -500),
+                new Point3D(-100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(150, 150, 0)));
+        scene.addGeometry(new Triangle(new Point3D(100, -100, -500),
+                new Point3D(0, -100, -500),
+                new Point3D(100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(150, 0, 150)));
+        scene.addGeometry(new Triangle(new Point3D(-100, -100, -500),
+                new Point3D(0, -100, -500),
+                new Point3D(-100, 0, -500)
+                , new Material(1, 1, 1, 1, 15), new Color(50, 100, 150)));
+
+
+//
+       /* ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new PointLight( new Color(255,255,255)
+                ,new Point3D(0,0,-1),0,0,0.000000001 ));*/
+
+
+       //scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("Render test- basic test2", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.15);
+        render.renderImage();
+        render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+    /* test case: 1 sphere in the center, 4 triangles around it with colors
+    adding other light source and reduce the ambient light to 0*/
+    @Test
+    public void basicRendering2() throws Exception {
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Sphere(50, new Point3D(0, 0, -500),
+                new Material(1, 1, 1, 0, 15),
+                new Color(255, 255, 255)));
+        scene.addGeometry(new Triangle(new Point3D(100, 100, -500),
+                new Point3D(0, 100, -500),
+                new Point3D(100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(0, 150, 150)));
+        scene.addGeometry(new Triangle(new Point3D(-100, 100, -500),
+                new Point3D(0, 100, -500),
+                new Point3D(-100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(150, 150, 0)));
+        scene.addGeometry(new Triangle(new Point3D(100, -100, -500),
+                new Point3D(0, -100, -500),
+                new Point3D(100, 0, -500)
+                , new Material(1, 1, 1, 0, 15), new Color(150, 0, 150)));
+        scene.addGeometry(new Triangle(new Point3D(-100, -100, -500),
+                new Point3D(0, -100, -500),
+                new Point3D(-100, 0, -500)
+                , new Material(1, 1, 1, 1, 15), new Color(50, 100, 150)));
+
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new PointLight( new Color(255,255,255)
+                ,new Point3D(0,0,-1),0,0,0.00000001 ));
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("Render test- basic test3", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.0);
+        render.renderImage();
+        render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+    @Test
+    public void basicRendering3() throws Exception {
 
         Scene scene = new Scene();
         scene.addGeometry(new Sphere(100, new Point3D(0, 0, -500),
@@ -53,7 +172,102 @@ public class RenderTest {
         //  lights.add(new DirectionalLight());
 
         scene.set_lights(lights);
-        ImageWriter imageWriter = new ImageWriter("Render test- shadows1", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Render test", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.15);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+
+    /*
+    test case: throw lights in diffrente angles on planes and spheres
+     */
+    @Test
+    public void deffuiseAndSpecularTestint_PointLight_plane() throws Exception {
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Plane(new Point3D(-100,0,0),
+                new Vector(1,0,0),
+                new Material(0,5,0,0,1),
+                new Color(140,10,200)));
+
+
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new Elements.PointLight(new Color(150, 24, 50)
+                , new Point3D(-50, 0, -500),
+                0.00001, 0.0005, 0.000001));
+
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("deffuiseAndSpecularTestint_PointLight_plane", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.15);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+    @Test
+    public void deffuiseAndSpecularTestint_SpotLight_plane() throws Exception {
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Plane(new Point3D(-100,0,0),
+                new Vector(1,0,0),
+                new Material(0,5,0,0,1),
+                new Color(140,10,200)));
+
+
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new Elements.SpotLight(new Color(150, 24, 50)
+                , new Point3D(200, -100, -300),
+                0.0001, 0.005, 0.0000001, new Vector(-1,1,-1)));
+
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("deffuiseAndSpecularTestint_SpotLight_plane", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.15);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+    @Test
+    public void deffuiseAndSpecularTestint_PointLight_sphere() throws Exception {
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Sphere(100, new Point3D(0, 0, -500),
+                new Material(1, 1, 1, 1, 15),
+                new Color(20, 50, 100)));
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new Elements.PointLight(new Color(150, 24, 50)
+                , new Point3D(-130, -130, -300),
+                0.0001, 0.005, 0.000001));
+
+
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("deffuiseAndSpecularTestint_PointLight_Sphere", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.15);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+    @Test
+    public void deffuiseAndSpecularTestint_SpotLight_sphere() throws Exception {
+
+
+        Scene scene = new Scene();
+        scene.addGeometry(new Sphere(100, new Point3D(0, 0, -500),
+                new Material(1, 1, 1, 1, 15),
+                new Color(20, 50, 100)));
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new Elements.SpotLight(new Color(150, 24, 50)
+                , new Point3D(-100, -100, -400),
+                0.0001, 0.005, 0.0000001,new Vector(9,9,-1)));
+
+
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("deffuiseAndSpecularTestint_SpotLight_Sphere", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.15);
         render.renderImage();

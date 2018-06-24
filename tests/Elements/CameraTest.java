@@ -26,9 +26,4 @@ public class CameraTest {
                 ray.get_direction().get_head().get_to().get_coordinate(),
                 1e-10);
             }
-
-
-
-
-
 }
