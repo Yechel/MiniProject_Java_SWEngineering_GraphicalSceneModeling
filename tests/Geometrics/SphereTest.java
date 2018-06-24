@@ -1,6 +1,8 @@
 package Geometrics;
 
-import Primitives.*;
+import Primitives.Point3D;
+import Primitives.Ray;
+import Primitives.Vector;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class SphereTest {
         ray_list.add( new Ray(new Vector(0,-1,-1), new Point3D(0,0,0)));
         ray_list.add( new Ray(new Vector(1,-1,-1), new Point3D(0,0,0)));
 
-        Sphere s = new Sphere(1,new Point3D(0,0,-3),new Material(),new Color());
+        Sphere s = new Sphere(1,new Point3D(0,0,-3));
         ArrayList<Point3D> intersections = new ArrayList <>()  ;
         for (Ray r:ray_list) {
             intersections.addAll(s.findIntersections(r));

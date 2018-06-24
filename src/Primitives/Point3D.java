@@ -1,58 +1,58 @@
 package Primitives;
 
 public class Point3D extends Point2D {
-    private Coordinate _to;
+    private Coordinate _z;
 
     //getter
-    public Coordinate get_to() {
-        return _to;
+    public Coordinate get_z() {
+        return _z;
     }
 
     //setter
-    public void set_to(double _to) {
-        this._to = new Coordinate(_to);
+    public void set_z(double _z) {
+        this._z = new Coordinate(_z);
     }
 
     //Ctors
     public Point3D() {
-        set_up(0);
-        set_right(0);
-        set_to(0);
+        set_x(0);
+        set_y(0);
+        set_z(0);
     }
 
     public Point3D(Point3D head) {
-        set_up(head.get_up().get_coordinate());
-        set_right(head.get_right().get_coordinate());
-        set_to(head.get_to().get_coordinate());
+        set_x(head.get_x().get_coordinate());
+        set_y(head.get_y().get_coordinate());
+        set_z(head.get_z().get_coordinate());
     }
 
-    public Point3D(Coordinate up, Coordinate right, Coordinate to) {
-        super(up.get_coordinate(), right.get_coordinate());
-        set_to(to.get_coordinate());
+    public Point3D(Coordinate x, Coordinate y, Coordinate z) {
+        super(x.get_coordinate(), y.get_coordinate());
+        set_z(z.get_coordinate());
     }
 
-    public Point3D(double up, double right, double to) {
-        super(up, right);
-        set_to(to);
+    public Point3D(double x, double y, double z) {
+        super(x, y);
+        set_z(z);
     }
 
-    public Point3D(Point2D p, Coordinate to) {
+    public Point3D(Point2D p, Coordinate z) {
         super(p);
-        set_to(to.get_coordinate());
+        set_z(z.get_coordinate());
     }
 
     @Override
     public String toString() {
-        return String.format("(%s,%s)", super.toString(), get_to());
+        return String.format("(%s,%s)", super.toString(), get_z());
     }
 
     @Override
     public boolean equals(Object obj) throws IllegalArgumentException {
         if (obj instanceof Point3D) {
-            Point2D p1 = new Point2D(get_up().get_coordinate(), get_right().get_coordinate());
-            Point2D p2 = new Point2D(((Point3D) obj).get_up().get_coordinate(), ((Point3D) obj).get_right().get_coordinate());
+            Point2D p1 = new Point2D(get_x().get_coordinate(), get_y().get_coordinate());
+            Point2D p2 = new Point2D(((Point3D) obj).get_x().get_coordinate(), ((Point3D) obj).get_y().get_coordinate());
             if (p1.equals(p2)) {
-                if (get_to().equals(((Point3D) obj).get_to())) {
+                if (get_z().equals(((Point3D) obj).get_z())) {
                     return true;
                 }
             }
@@ -66,31 +66,31 @@ public class Point3D extends Point2D {
 
 
     public Point3D scale(double d) {
-        this.set_up(this.get_up().get_coordinate() * d);
-        this.set_right(this.get_right().get_coordinate() * d);
-        this.set_to(this.get_to().get_coordinate() * d);
+        this.set_x(this.get_x().get_coordinate() * d);
+        this.set_y(this.get_y().get_coordinate() * d);
+        this.set_z(this.get_z().get_coordinate() * d);
         return this;
     }
 
     public Point3D add(Vector vector) {
-        this.set_up(this.get_up().add(vector.get_head().get_up()).get_coordinate());
-        this.set_right(this.get_right().add(vector.get_head().get_right()).get_coordinate());
-        this.set_to(this.get_to().add(vector.get_head().get_to()).get_coordinate());
+        this.set_x(this.get_x().add(vector.get_head().get_x()).get_coordinate());
+        this.set_y(this.get_y().add(vector.get_head().get_y()).get_coordinate());
+        this.set_z(this.get_z().add(vector.get_head().get_z()).get_coordinate());
         return this;
     }
 
     public Point3D subtract(Vector vector) {
-        this.set_up(this.get_up().subtract(vector.get_head().get_up()).get_coordinate());
-        this.set_right(this.get_right().subtract(vector.get_head().get_right()).get_coordinate());
-        this.set_to(this.get_to().subtract(vector.get_head().get_to()).get_coordinate());
+        this.set_x(this.get_x().subtract(vector.get_head().get_x()).get_coordinate());
+        this.set_y(this.get_y().subtract(vector.get_head().get_y()).get_coordinate());
+        this.set_z(this.get_z().subtract(vector.get_head().get_z()).get_coordinate());
         return this;
     }
 
     public double distance(Point3D point) {
         return Math.sqrt(
-                Math.pow(point.get_up().get_coordinate() - get_up().get_coordinate(), 2) +
-                        Math.pow(point.get_right().get_coordinate() - get_right().get_coordinate() , 2) +
-                        Math.pow(point.get_to().get_coordinate() - get_to().get_coordinate(), 2));
+                Math.pow(point.get_x().get_coordinate() - get_x().get_coordinate(), 2) +
+                        Math.pow(point.get_y().get_coordinate() - get_y().get_coordinate() , 2) +
+                        Math.pow(point.get_z().get_coordinate() - get_z().get_coordinate(), 2));
     }
 
 

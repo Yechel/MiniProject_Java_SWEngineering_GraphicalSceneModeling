@@ -1,7 +1,6 @@
 package Primitives;
 
 public class Coordinate {
-    public static final Coordinate ZERO = new Coordinate(0); ;
     private double _coordinate;
 
     //getter
@@ -26,7 +25,7 @@ public class Coordinate {
 
     @Override
     public boolean equals(Object obj) throws ExceptionInInitializerError {
-        if (obj instanceof Coordinate ) {
+        if (obj instanceof Coordinate) {
             return get_coordinate() == ((Coordinate) obj).get_coordinate();
         }
         throw new ExceptionInInitializerError("the object is not Cylinder type");

@@ -1,6 +1,8 @@
 package Geometrics;
 
-import Primitives.*;
+import Primitives.Point3D;
+import Primitives.Ray;
+import Primitives.Vector;
 
 import java.util.List;
 
@@ -8,9 +10,6 @@ public class Cylinder extends RadialGeometry {
     private Point3D _axisPoint;
     private Vector _axisDirection;
 
-    ///////////////////////////
-    //////////getters//////////
-    ///////////////////////////
 
     public Point3D get_axisPoint() {
         return _axisPoint;
@@ -20,21 +19,14 @@ public class Cylinder extends RadialGeometry {
         return _axisDirection;
     }
 
-    ////////////////////////////
-    //////////setters//////////
-    ///////////////////////////
-
     public void set_axisPoint(Point3D _axisPoint) {
         this._axisPoint = _axisPoint;
     }
 
+
     public void set_axisDirection(Vector _axisDirection) {
         this._axisDirection = _axisDirection;
     }
-
-    ////////////////////////////
-    ////////constructors////////
-    ///////////////////////////
 
     public Cylinder() {
         super();
@@ -49,7 +41,9 @@ public class Cylinder extends RadialGeometry {
         set_axisPoint(axisPoint);
         _axisDirection.normalize();
     }
-    ///////////////////////////
+
+
+
 
     /**
      * Cylinders are equal if they have the same radius,
@@ -77,15 +71,9 @@ public class Cylinder extends RadialGeometry {
     public String toString() {
         return String.format("Cylinder: r=%s, center=%s, direction=%s.", get_radius(), get_axisPoint(), get_axisDirection());
     }
-
+//TODO: implement
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         return null;
     }
-
-    @Override
-    public Vector getNormal(Point3D point) {
-        return null;
-    }
-
 }

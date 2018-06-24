@@ -1,6 +1,7 @@
 package Geometrics;
 
-import Primitives.*;
+import Primitives.Point3D;
+import Primitives.Ray;
 import Primitives.Vector;
 
 import java.lang.reflect.Array;
@@ -8,16 +9,13 @@ import java.util.*;
 
 import static java.lang.String.format;
 
-public class Triangle implements Geometry , FlatGeometry {
+public class Triangle implements Geometry {
     private Point3D _p1;
     private Point3D _p2;
     private Point3D _p3;
-    private Material _material;
-    private Color _emission;
 
-
-    /*constructors*/
-    public Triangle(Point3D p1, Point3D p2, Point3D p3, Material material, Color emission) throws Exception {
+    /*constractors*/
+    public Triangle(Point3D p1, Point3D p2, Point3D p3) throws Exception {
         Vector V = new Vector(p1, p2);
         Vector U = new Vector(p1, p3);
         Vector zero = new Vector(new Point3D(0, 0, 0));
@@ -27,17 +25,12 @@ public class Triangle implements Geometry , FlatGeometry {
         set_p1(p1);
         set_p2(p2);
         set_p3(p3);
-        set_material(material);
-        set_emission(emission);
-
     }
 
     public Triangle() {
         set_p1(new Point3D(1, 1, 1));
         set_p2(new Point3D(1, 0, 1));
         set_p3(new Point3D(0, 1, 0));
-        set_material(new Material());
-        set_emission(new Color());
     }
 
     /*getters*/
@@ -129,37 +122,4 @@ public class Triangle implements Geometry , FlatGeometry {
         list.clear();
         return list;
     }
-
-    @Override
-    public Vector getNormal(Point3D point) {
-        Vector v1 = new Vector(get_p2(), get_p1());
-        Vector v2 = new Vector(get_p3(), get_p1());
-        return v1.crossProduct(v2).normalize();
-    }
-
-
-    @Override
-    public Material get_material() {
-        return new Material(_material);
-    }
-
-    @Override
-    public void set_material(Material material) {
-        _material = material;
-    }
-
-    @Override
-    public Color get_emission() {
-        return new Color(_emission);
-    }
-
-
-
-    @Override
-    public void set_emission(Color emission) {
-        _emission = emission;
-    }
-
-
-
 }//end of Triangle
