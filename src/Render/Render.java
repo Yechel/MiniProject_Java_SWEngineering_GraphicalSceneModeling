@@ -19,6 +19,13 @@ public class Render {
     private final int DISTANCE_BETWEEN_LIGHTS = 100;
 
 
+
+
+
+    ///////////////
+    ////getters////
+    ///////////////
+
     public Scene get_scene() {
         return _scene;
     }
@@ -26,6 +33,10 @@ public class Render {
     public ImageWriter get_imageWriter() {
         return _imageWriter;
     }
+
+    ////////////////
+    ////setters/////
+    ////////////////
 
     public void set_scene(Scene _scene) {
         this._scene = _scene;
@@ -35,11 +46,21 @@ public class Render {
         this._imageWriter = _imageWriter;
     }
 
+    /////////////////
+   /// constructors///
+   /// ///////////////
     public Render(Scene scene, ImageWriter imageWriter) {
         set_scene(scene);
         set_imageWriter(imageWriter);
     }
 
+    /////////////////////
+
+    /**
+     * this func is drowing the image by sending rays to each pixel and then coloring the pixsel
+     * depends on the intersections values
+     *
+     *  */
     public void renderImage() {
         for (int i = 0; i < get_imageWriter().get_Nx(); i++) {
             for (int j = 0; j < get_imageWriter().get_Ny(); j++) {  // for each point (i,j) in the image
@@ -60,6 +81,11 @@ public class Render {
         }
     }
 
+    /**
+     * this func is printing gris in the image
+     * @param interval
+     * @param color
+     */
     public void printGrid(int interval, Color color) {
         for (int y = 0; y < get_imageWriter().get_Ny(); y++) {
             if (y % interval == 0) {
@@ -84,6 +110,18 @@ public class Render {
         return calcColor(geometry, p, inRay, MAX_CALC_COLOR_LEVEL, 0.1);
     }
 
+
+    /**
+     * this func is clculating the color of the pixel.
+     * its calculating the light intensity with the deffuisive and spacular ray in addition to the reflecting and refracting rays
+     * and adding the shadows intensity
+     * @param geometry
+     * @param p
+     * @param inRay
+     * @param level
+     * @param k
+     * @return
+     */
     private java.awt.Color calcColor(Geometry geometry, Point3D p, Ray inRay, int level, double k) {
         if (level == 0 || k == 0) {
             return java.awt.Color.BLACK;
@@ -156,13 +194,12 @@ public class Render {
         return areaRays;
     }
 
-    private Vector getVecToPlane(Point3D p0, Point3D pointInPlane, Vector v, Vector u, int i, int j) {
-        Point3D head = pointInPlane.add((v.scale(i)).add(u.scale(j)));
-        return new Vector(head, p0);
-    }
 
-
-
+    /**
+     * this func finding the points from geometries the intersect with given ray
+     * @param ray
+     * @return
+     */
     private HashMap <Geometry, ArrayList <Point3D>> getSceneRayIntersections(Ray ray) {
         Point3D p = ray.get_POO();
         HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = new HashMap <>();
@@ -182,18 +219,7 @@ public class Render {
 
 
 
-    private HashMap <Geometry, Point3D> findClosestIntersections(Ray ray) {
-        HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = getSceneRayIntersections(ray);
-        if (intersectionPoints.isEmpty()) {
-            return null;
-        } else {
-            HashMap <Geometry, Point3D> closestPoint = getClosestPoint(intersectionPoints); // get the closest point to the ray
-            Geometry key = (Geometry) closestPoint.keySet().toArray()[0];
-            return closestPoint;
-        }
-    }
-
-    //נ’“=נ’—גˆ’נגˆ™נ’—גˆ™נ’גˆ™נ’
+    //𝒓=𝒗−𝟐∙𝒗∙𝒏∙𝒏
     private Ray constructReflectedRay(Vector n, Point3D p, Ray inRay) {
         Vector v = inRay.get_direction();
         double calcScalar = n.dotProduct(v) * 2;
@@ -207,6 +233,12 @@ public class Render {
     }
 
 
+    /**
+     * this func calculate the intensity of the shadow in given point
+     * @param l
+     * @param p
+     * @return
+     */
     private double occluded(Vector l, Point3D p) {
         Vector lightDirection = l.scale(-1); // from point to light source
         ArrayList <Ray> areaRays = getAreaRayList(lightDirection, p);
@@ -243,6 +275,22 @@ public class Render {
         return lightIntensity.scale(kd).scale(Math.abs(l.dotProduct(n)));
     }
 
+    /**
+     *this func returns the closest point that intersect with the ray
+     * @param ray
+     * @return
+     */
+    private HashMap <Geometry, Point3D> findClosestIntersections(Ray ray) {
+        HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = getSceneRayIntersections(ray);
+        if (intersectionPoints.isEmpty()) {
+            return null;
+        } else {
+            HashMap <Geometry, Point3D> closestPoint = getClosestPoint(intersectionPoints); // get the closest point to the ray
+            Geometry key = (Geometry) closestPoint.keySet().toArray()[0];
+            return closestPoint;
+        }
+    }
+
     private HashMap <Geometry, Point3D> getClosestPoint
             (HashMap <Geometry, ArrayList <Point3D>> intersectionPoints) {
         final double[] distance = {Double.MAX_VALUE};
@@ -259,13 +307,6 @@ public class Render {
             });
         });
         return minDistancePoint;
-    }
-
-    private void addIntersectionPoints
-            (ArrayList <Point3D> toIntersectionPoints, ArrayList <Point3D> fromGeometryIntersectionPoints) {
-        for (Point3D p : fromGeometryIntersectionPoints) {
-            toIntersectionPoints.add(p);
-        }
     }
 
 
