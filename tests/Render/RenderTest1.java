@@ -1,26 +1,25 @@
-/*
 package Render;
 
-import Elements.*;
-import Geometrics.Geometry;
+import Elements.Light;
+import Elements.PointLight;
+import Elements.SpotLight;
 import Geometrics.Plane;
 import Geometrics.Sphere;
 import Geometrics.Triangle;
-import Primitives.*;
-import Render.ImageWriter;
+import Primitives.Color;
+import Primitives.Material;
+import Primitives.Point3D;
+import Primitives.Vector;
 import Scene.Scene;
-//import org.junit.Test;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RenderTest {
+class RenderTest1 {
 
-    */
-/* test case: 1 sphere in the center, 4 triangles around it, and checking printGrid func*//*
-
+    /* test case: 1 sphere in the center, 4 triangles around it, and checking printGrid func*/
     @Test
     public void basicRendering() throws Exception {
 
@@ -47,7 +46,7 @@ public class RenderTest {
 
 
 //
-        ArrayList <Light> lights = new ArrayList <>();
+        ArrayList<Light> lights = new ArrayList <>();
         lights.add(new PointLight( new Color(255,255,255)
                 ,new Point3D(0,0,-1),0,0,0.000000001 ));
 
@@ -60,9 +59,7 @@ public class RenderTest {
         render.get_imageWriter().writeToimage();
     }
 
-    */
-/* test case: 1 sphere in the center, 4 triangles around it with colors*//*
-
+    /* test case: 1 sphere in the center, 4 triangles around it with colors*/
     @Test
     public void basicRendering1() throws Exception {
 
@@ -89,11 +86,9 @@ public class RenderTest {
 
 
 //
-       */
-/* ArrayList <Light> lights = new ArrayList <>();
+       /* ArrayList <Light> lights = new ArrayList <>();
         lights.add(new PointLight( new Color(255,255,255)
-                ,new Point3D(0,0,-1),0,0,0.000000001 ));*//*
-
+                ,new Point3D(0,0,-1),0,0,0.000000001 ));*/
 
 
         //scene.set_lights(lights);
@@ -105,10 +100,8 @@ public class RenderTest {
         render.get_imageWriter().writeToimage();
     }
 
-    */
-/* test case: 1 sphere in the center, 4 triangles around it with colors
-    adding other light source and reduce the ambient light to 0*//*
-
+    /* test case: 1 sphere in the center, 4 triangles around it with colors
+    adding other light source and reduce the ambient light to 0*/
     @Test
     public void basicRendering2() throws Exception {
 
@@ -163,28 +156,22 @@ public class RenderTest {
 //
 //       scene.addGeometry(triangle);
 
-       */
-/* Plane plane = new Plane(new Point3D(-10,-10,-500),
+       /* Plane plane = new Plane(new Point3D(-10,-10,-500),
                 new Point3D(-10,10,-500),
                 new Point3D(-11,0,-500),
         new Material(0,5,5),
-        new Color(140,10,200));*//*
-
+        new Color(140,10,200));*/
         // scene.addGeometry(plane);
         ArrayList <Light> lights = new ArrayList <>();
         lights.add(new PointLight(new Color(150, 24, 50)
                 , new Point3D(-130, -130, -300),
                 0.0001, 0.005, 0.000001));
-*/
 /*        lights.add(new PointLight(new Color(150,24,50)
                 ,new Point3D(-250,-250,-400),
-                0.002,0.0000001,0.000009));*//*
-
-  */
-/*      lights.add(new SpotLight(new Color(230, 0, 0)
+                0.002,0.0000001,0.000009));*/
+  /*      lights.add(new SpotLight(new Color(230, 0, 0)
                 , new Point3D(75, 75, -400),
-                0, 0, 0.0000005, new Vector(0, 0, -1)));*//*
-
+                0, 0, 0.0000005, new Vector(0, 0, -1)));*/
         //  lights.add(new DirectionalLight());
 
         scene.set_lights(lights);
@@ -197,11 +184,9 @@ public class RenderTest {
     }
 
 
-    */
-/*
+    /*
     test case: throw lights in diffrente angles on planes and spheres
-     *//*
-
+     */
     @Test
     public void deffuiseAndSpecularTestint_PointLight_plane() throws Exception {
 
@@ -325,16 +310,12 @@ public class RenderTest {
         lights.add(new PointLight(new Color(150, 24, 50)
                 , new Point3D(-140, -70,-330),
                 0.0001, 0.005, 0.000001));
-*/
 /*        lights.add(new PointLight(new Color(150,24,50)
                 ,new Point3D(-250,-250,-400),
-                0.002,0.0000001,0.000009));*//*
-
-  */
-/*      lights.add(new SpotLight(new Color(230, 0, 0)
+                0.002,0.0000001,0.000009));*/
+  /*      lights.add(new SpotLight(new Color(230, 0, 0)
                 , new Point3D(75, 75, -400),
-                0, 0, 0.0000005, new Vector(0, 0, -1)));*//*
-
+                0, 0, 0.0000005, new Vector(0, 0, -1)));*/
 
 
 
@@ -514,6 +495,4 @@ public class RenderTest {
         //   render.printGrid(50);
         render.get_imageWriter().writeToimage();
     }
-
-
-}*/
+}

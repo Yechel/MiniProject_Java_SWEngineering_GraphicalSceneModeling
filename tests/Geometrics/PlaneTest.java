@@ -1,12 +1,13 @@
+/*
 package Geometrics;
 
 import Primitives.*;
-import org.junit.Test;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlaneTest {
@@ -24,14 +25,16 @@ public class PlaneTest {
         assertFalse(false_test.equals(tester));
     }
 
-    /*
+    */
+/*
     testing:
    - parallel Ray
    - crossing Ray
    - some intersect Ray
    - non intersect Ray
    - the ray comes out from the plane
-   */
+   *//*
+
     @Test
     public void findIntersections1() {
         ArrayList <Ray> ray_list = new ArrayList <>();
@@ -100,4 +103,4 @@ public class PlaneTest {
         }
 
 
-}
+}*/

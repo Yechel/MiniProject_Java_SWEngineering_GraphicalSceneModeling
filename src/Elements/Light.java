@@ -1,6 +1,7 @@
 package Elements;
 
 import Primitives.Color;
+import Primitives.Point3D;
 
 
 /**
@@ -20,6 +21,7 @@ public abstract class Light implements LightSource {
         return get_color();
     }
 
+
     ////////////////////////////
     //////////setters//////////
     ///////////////////////////
@@ -29,4 +31,5 @@ public abstract class Light implements LightSource {
     }
 
     ////////////////////////////
+
 }

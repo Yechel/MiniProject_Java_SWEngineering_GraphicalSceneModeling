@@ -1,5 +1,6 @@
 package Elements;
 
+import Elements.Camera;
 import Primitives.Ray;
 import Primitives.Vector;
 import org.junit.Test;

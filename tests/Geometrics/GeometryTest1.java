@@ -1,21 +1,19 @@
-/*
 package Geometrics;
 
 import Primitives.*;
-import org.junit.Test;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import org.junit.jupiter.api.Test;
-import org.junit.Test;
-import static org.junit.Assert.*;
-public class SphereTest {
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
+class GeometryTest1 {
+
 
     @Test
-    public void findIntersections() {
+    public void findIntersections_sphere_test() {
         ArrayList<Ray> ray_list = new ArrayList <>();
         ray_list.add( new Ray(new Vector(-1,1,-1), new Point3D(0,0,0)));
         ray_list.add( new Ray(new Vector(0,1,-1), new Point3D(0,0,0)));
@@ -97,6 +95,35 @@ public class SphereTest {
     }
 
 
+    //tests:
+    //crossing point
+    //not crossing the plane ray
+    //A ray that crossing the plane but not the triangle
+
+    public void findIntersections() throws Exception {
+        ArrayList<Ray> ray_list = new ArrayList <>();
+        ray_list.add( new Ray(new Vector(-1,1,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(0,1,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(1,1,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(-1,0,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(0,0,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(1,0,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(-1,-1,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(0,-1,-1), new Point3D(0,0,0)));
+        ray_list.add( new Ray(new Vector(1,-1,-1), new Point3D(0,0,0)));
+
+        Triangle t = new Triangle(new Point3D(0, 100, -20),
+                new Point3D(  100, -100, -20),
+                new Point3D( -100, -100, -20),new Material(),new Color() );
+        ArrayList<Point3D> intersections = new ArrayList <>()  ;
+        for (Ray r:ray_list) {
+            intersections.addAll(t.findIntersections(r));
+        }
+        assertTrue(intersections.size() == 9);
+
+
+    }
+
 
     private void addAll(List<Point3D> from, ArrayList<Point3D> to) {
         while(!from.isEmpty())
@@ -105,4 +132,4 @@ public class SphereTest {
             from.remove(0);
         }
     }
-}*/
+}
