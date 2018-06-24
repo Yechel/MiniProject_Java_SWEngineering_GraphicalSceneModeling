@@ -65,19 +65,16 @@ public class Render {
             if (y % interval == 0) {
                 //set line
                 for (int x = 0; x < get_imageWriter().get_Nx(); x++) {
-                    if (y == x) {
-                        get_imageWriter().writePixel(x, y, java.awt.Color.RED);
-                    } else {
-                    }
-                    ;
-                }
-            } else {
-                for (int x = 0; x < get_imageWriter().get_Nx(); x = x + interval) {
                     get_imageWriter().writePixel(x, y, color.get_color());
                 }
+            } else{
+            for (int x = 0; x < get_imageWriter().get_Nx(); x = x + interval) {
+                get_imageWriter().writePixel(x, y, color.get_color());
             }
         }
     }
+
+}
 
     public void printGrid(int interval) {
         printGrid(interval, get_scene().get_ambientLight().get_color());
@@ -165,7 +162,7 @@ public class Render {
     }
 
 
-    //TODO: decside....
+
     private HashMap <Geometry, ArrayList <Point3D>> getSceneRayIntersections(Ray ray) {
         Point3D p = ray.get_POO();
         HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = new HashMap <>();
@@ -180,15 +177,6 @@ public class Render {
         });
         return intersectionPoints;
 
-        /*
-        HashMap <Geometry, ArrayList <Point3D>> intersectionPoints = new HashMap <>();
-        get_scene().get_geometries().forEach(geometry -> { // for each geometry find intersection with the ray
-            ArrayList <Point3D> geometryIntersectionPoints = (ArrayList <Point3D>) geometry.findIntersections(ray);
-            if (!geometryIntersectionPoints.isEmpty()) {
-                intersectionPoints.put(geometry, geometryIntersectionPoints); // if there is intersections so add them
-            }
-        });
-        return intersectionPoints;*/
     }
 
     private HashMap <Geometry, ArrayList <Point3D>> findIntersectionsFromRay(Ray lightRay) {
@@ -300,30 +288,5 @@ public class Render {
 }
 
 
-
-
-/* CalcCOLOR working Ver no reflections and reflactors
-* private java.awt.Color calcColor(Geometry geometry, Point3D p,Ray ray) {
-        Color ambientLight = get_scene().get_ambientLight().getIntensity();
-        Color emissionLight = geometry.get_emission();
-        Vector n = geometry.getNormal(p);
-        int nShininess = geometry.get_material().get_nShininess();
-        double kd = geometry.get_material().get_Kd();
-        double ks = geometry.get_material().get_Ks();
-        Color color = ambientLight.add(emissionLight) ;
-        Vector v = new Vector(p, get_scene().get_camera().get_P0()).normalize();
-
-        for (LightSource lightSrc : get_scene().get_lights()) {
-            Color lightIntensity = lightSrc.getIntensity(p);
-            Vector l = lightSrc.getL(p);
-            if (n.dotProduct(l) * n.dotProduct(v) > 0) {
-                if (!occluded(l, p)) {
-                    color.add(calcDiffusive(kd, l, n, lightIntensity));
-                    color.add(calcSpecular(ks, l, n, v, nShininess, lightIntensity));
-               }
-           }
-        }
-        return color.get_color();
-    }*/
 
 
