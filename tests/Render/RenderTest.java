@@ -497,7 +497,87 @@ class RenderTest1 {
         //////////RENDERING ATTRIBUTES/////////
         ///////////////////////////////////////
         scene.set_lights(lights);
-        ImageWriter imageWriter = new ImageWriter("Render test - softShadows1", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Render test - softShadows21", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.0005);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+    @Test
+    public void lightRendering_softShadows_get_closer() throws Exception {
+
+        Scene scene = new Scene();
+        scene.get_camera().set_P0(new Point3D(-50,-50,-100));
+        //////////////////////////////////
+        ///////////GEOMETRIES/////////////
+        //////////////////////////////////
+        scene.addGeometry(new Sphere(50,new Point3D(0, -0, -440),
+                new Material(2, 2, 0,0,5),
+                new Color(java.awt.Color.ORANGE)));
+        scene.addGeometry( new Plane(new Point3D(0,0,-506),new Vector(0,0,1),
+                new Material(1,1,1,1,15), new Color(java.awt.Color.DARK_GRAY)));
+
+
+
+
+        /////////////////////////////////////
+        ////////////////LIGHTS///////////////
+        /////////////////////////////////////
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new SpotLight(new Color(255, 255, 255)
+                , new Point3D(150, 150,-200),
+                0, 0.0001, 0.00000005,new Vector(-2,-2,1)));
+
+
+
+
+        ///////////////////////////////////////
+        //////////RENDERING ATTRIBUTES/////////
+        ///////////////////////////////////////
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("Render test - softShadows-get closer", 500, 500, 500, 500);
+        Render render = new Render(scene, imageWriter);
+        scene.get_ambientLight().set_Ka(0.0005);
+        render.renderImage();
+        //   render.printGrid(50);
+        render.get_imageWriter().writeToimage();
+    }
+
+    @Test
+    public void lightRendering_softShadows_get_farther() throws Exception {
+
+        Scene scene = new Scene();
+
+        //////////////////////////////////
+        ///////////GEOMETRIES/////////////
+        //////////////////////////////////
+        scene.addGeometry(new Sphere(50,new Point3D(0, -0, -440),
+                new Material(2, 2, 0,0,5),
+                new Color(java.awt.Color.ORANGE)));
+        scene.addGeometry( new Plane(new Point3D(0,0,-506),new Vector(0,0,1),
+                new Material(1,1,1,1,15), new Color(java.awt.Color.DARK_GRAY)));
+
+
+
+
+        /////////////////////////////////////
+        ////////////////LIGHTS///////////////
+        /////////////////////////////////////
+        ArrayList <Light> lights = new ArrayList <>();
+        lights.add(new SpotLight(new Color(255, 255, 255)
+                , new Point3D(450, 450,-400),
+                0, 0.0001, 0.00000005,new Vector(-2,-2,1)));
+
+
+
+
+        ///////////////////////////////////////
+        //////////RENDERING ATTRIBUTES/////////
+        ///////////////////////////////////////
+        scene.set_lights(lights);
+        ImageWriter imageWriter = new ImageWriter("Render test - softShadows-get farther", 500, 500, 500, 500);
         Render render = new Render(scene, imageWriter);
         scene.get_ambientLight().set_Ka(0.0005);
         render.renderImage();

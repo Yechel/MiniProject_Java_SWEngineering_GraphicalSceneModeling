@@ -117,9 +117,9 @@ public class Camera extends SceneDescriptor {
                                         double screenDistance,
                                         double screenWidth,
                                         double screenHeight) {
-        //assuming that p0 = (0,0,0).
         Vector Pc = new Vector(get_vTo());
         Pc.scale(screenDistance);
+        Pc.add(new Vector(get_P0()));
         double Rx = screenWidth / Nx;
         double Ry = screenHeight / Ny;
         double Xd = (x - ((Nx + 1) / 2)) * Rx;

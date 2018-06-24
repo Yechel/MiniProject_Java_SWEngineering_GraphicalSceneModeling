@@ -1,5 +1,6 @@
 package Render;
 
+import Elements.Camera;
 import Elements.LightSource;
 import Geometrics.Geometry;
 import Geometrics.Triangle;
@@ -16,8 +17,8 @@ public class Render {
     //reflected and refracted effect
     private final int MAX_CALC_COLOR_LEVEL = 5;
     //soft shadows effect
-    private final int DISTANCE_BETWEEN_LIGHTS = 100;
-
+    private final int DISTANCE_BETWEEN_LIGHTS = 50;
+    //    private final int RADUIS_OF_LIGHT_SUORCE = 50;
 
 
 
@@ -169,6 +170,30 @@ public class Render {
 
         return currentColor.get_color();
     }
+/*
+    private ArrayList <Ray> getAreaRayList(Vector direction, Point3D p) {
+        double distance = p.distance(direction.get_head());
+        ArrayList <Ray> areaRays = new ArrayList <>();
+        if (distance <= RADUIS_OF_LIGHT_SUORCE) //the point in the light source
+        {
+            return areaRays;
+        }
+
+        Camera tempCam = new Camera(p,get_scene().get_camera().get_vUp(),get_scene().get_camera().get_vTo());
+
+        for (int i =0 ; i < 10;i++){
+
+            for (int j = 0 ; j<10; j++)
+
+
+}*//*
+
+
+
+        return areaRays;
+    }*/
+
+
 
 
     private ArrayList <Ray> getAreaRayList(Vector direction, Point3D p) {
@@ -191,6 +216,21 @@ public class Render {
         areaRays.add(new Ray(new Vector(new Point3D(0.25 * eps, 0, 0)).add(direction), p));
         areaRays.add(new Ray(new Vector(new Point3D(0, 0.25 * eps, 0)).add(direction), p));
         areaRays.add(new Ray(new Vector(new Point3D(0, 0, 0.25 * eps)).add(direction), p));
+        return areaRays;
+
+        areaRays.add(new Ray(new Vector(new Point3D(eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0,  eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(-eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0,  -eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, -eps)).add(direction), p));
+
+        areaRays.add(new Ray(new Vector(new Point3D( eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0,  eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0, eps)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D( eps, 0, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0,  eps, 0)).add(direction), p));
+        areaRays.add(new Ray(new Vector(new Point3D(0, 0,  eps)).add(direction), p));
         return areaRays;
     }
 
@@ -235,9 +275,9 @@ public class Render {
 
     /**
      * this func calculate the intensity of the shadow in given point
-     * @param l
-     * @param p
-     * @return
+     * @param l the direction of the intersecting ray
+     * @param p the point that intersected with the ray
+     * @return the intensity of the shadows
      */
     private double occluded(Vector l, Point3D p) {
         Vector lightDirection = l.scale(-1); // from point to light source
