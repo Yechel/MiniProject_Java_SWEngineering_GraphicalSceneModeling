@@ -17,6 +17,10 @@ public class Color {
         set_color(color.get_color());
     }
 
+    public Color() {
+        set_color(new java.awt.Color(255,255,255));
+    }
+
 
     public java.awt.Color get_color() {
         return new java.awt.Color(_color.getRGB());
@@ -46,9 +50,10 @@ public class Color {
     }
 
     public Color add(double _red, double _green, double _blue) {
-        return new Color(get_color().getRed() + fixNumOfAdd(_red),
-                get_color().getGreen() + fixNumOfAdd(_green),
-                get_color().getBlue() + fixNumOfAdd(_blue));
+        set_color( new Color(fixNumOfAdd(get_color().getRed() + _red),
+                fixNumOfAdd(get_color().getGreen() + _green),
+                fixNumOfAdd(get_color().getBlue() + _blue)).get_color());
+        return this;
     }
 
     private int fixNumOfAdd(double color) {
@@ -65,7 +70,7 @@ public class Color {
      * @param i number between -100 to 100 to scale by precent
      * @return an update color.
      */
-    public Color scale(double i) {
+    public Color    scale(double i) {
         return new Color(scale(get_color().getRed(), i),
                 scale(get_color().getGreen(), i),
                 scale(get_color().getBlue(), i));
@@ -73,13 +78,13 @@ public class Color {
 
 
     private int scale(int color, double v) {
-        int _newColor = (int) (color * (1 + v));
+        int _newColor = (int) (color *  v);
         if (_newColor > 255) {
             return 255;
         } else if (_newColor < 0) {
             return 0;
         } else {
-            return color;
+            return _newColor;
         }
 
     }

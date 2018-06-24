@@ -1,8 +1,6 @@
 package Geometrics;
 
-import Primitives.Point3D;
-import Primitives.Ray;
-import Primitives.Vector;
+import Primitives.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,12 +11,12 @@ import static org.junit.Assert.*;
 
 public class PlaneTest {
 
-    Plane tester = new Plane(new Point3D(1,0,0),new Vector(new Point3D(0,4,3)));
+    Plane tester = new Plane(new Point3D(1,0,0),new Vector(new Point3D(0,4,3)),new Material(),new Color());
 
     @Test
     public void equals() {
-        Plane true_test = new Plane(new Point3D(2,0,0),new Vector(new Point3D(0,4,3)));
-        Plane false_test = new Plane(new Point3D(1,0,0),new Vector(new Point3D(1,4,3)));
+        Plane true_test = new Plane(new Point3D(2,0,0),new Vector(new Point3D(0,4,3)),new Material(),new Color());
+        Plane false_test = new Plane(new Point3D(1,0,0),new Vector(new Point3D(1,4,3)),new Material(),new Color());
         assertTrue(tester.equals(tester));
         assertTrue(tester.equals(true_test));
         assertTrue(true_test.equals(tester));
@@ -48,7 +46,7 @@ public class PlaneTest {
         ray_list.add(new Ray(new Vector(1, -1, -1), new Point3D(0, 0, 0)));
 
         ArrayList <Point3D> intersections = new ArrayList <>();
-        Plane p = new Plane(new Point3D(0, 0, -1), new Vector(0, 0, 1));
+        Plane p = new Plane(new Point3D(0, 0, -1), new Vector(0, 0, 1),new Material(),new Color());
 
         for (Ray r : ray_list) {
             intersections.addAll(p.findIntersections(r));
